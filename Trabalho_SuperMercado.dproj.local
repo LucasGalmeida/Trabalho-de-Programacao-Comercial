@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2021/06/28 13:37:58.000.823,=C:\Users\Cliente\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/06/28 13:38:14.000.953,C:\Users\Cliente\Documents\Embarcadero\Studio\Projects\Trabalho_SuperMercado.dproj=C:\Users\Cliente\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2021/06/28 13:38:55.000.502,D:\Comercial\Trabalho\Unit1.pas=C:\Users\Cliente\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/06/28 13:38:55.000.502,D:\Comercial\Trabalho\Unit1.dfm=C:\Users\Cliente\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2021/06/28 13:38:59.000.777,D:\Comercial\Trabalho\Trabalho_SuperMercado.dproj=C:\Users\Cliente\Documents\Embarcadero\Studio\Projects\Trabalho_SuperMercado.dproj</Transaction>
+    <Transaction>2021/06/28 13:44:23.000.896,D:\Comercial\Trabalho\Unit1.dfm=D:\Comercial\Trabalho\Unit_Clientes.dfm</Transaction>
+    <Transaction>2021/06/28 13:44:23.000.896,D:\Comercial\Trabalho\Unit1.pas=D:\Comercial\Trabalho\Unit_Clientes.pas</Transaction>
+    <Transaction>2021/06/28 13:47:42.000.192,D:\Comercial\Trabalho\Unit_Principal.pas=D:\Comercial\Trabalho\Unit_Clientes.pas</Transaction>
+    <Transaction>2021/06/28 13:47:42.000.192,D:\Comercial\Trabalho\Unit_Principal.dfm=D:\Comercial\Trabalho\Unit_Clientes.dfm</Transaction>
+    <Transaction>2021/06/28 14:12:39.000.624,=D:\Comercial\Trabalho\Unit1.pas</Transaction>
+    <Transaction>2021/06/28 14:13:46.000.235,=D:\Comercial\Trabalho\Unit1.pas</Transaction>
+    <Transaction>2021/06/28 14:13:59.000.950,D:\Comercial\Trabalho\Unit1.dfm=D:\Comercial\Trabalho\Unit_Clientes.dfm</Transaction>
+    <Transaction>2021/06/28 14:13:59.000.950,D:\Comercial\Trabalho\Unit1.pas=D:\Comercial\Trabalho\Unit_Clientes.pas</Transaction>
+    <Transaction>2021/06/28 14:16:56.000.273,=D:\Comercial\Trabalho\Unit_Clientes.pas</Transaction>
+    <Transaction>2021/06/28 14:22:12.000.108,D:\Comercial\Trabalho\Unit_Clientes.pas=</Transaction>
+    <Transaction>2021/06/28 14:23:49.000.489,=D:\Comercial\Trabalho\Unit1.pas</Transaction>
+    <Transaction>2021/06/28 14:23:58.000.737,D:\Comercial\Trabalho\Unit_Clientes.pas=D:\Comercial\Trabalho\Unit1.pas</Transaction>
+    <Transaction>2021/06/28 14:23:58.000.737,D:\Comercial\Trabalho\Unit_Clientes.dfm=D:\Comercial\Trabalho\Unit1.dfm</Transaction>
+    <Transaction>2021/06/28 18:10:12.000.886,=D:\Comercial\Trabalho\Unit1.pas</Transaction>
+    <Transaction>2021/06/28 18:23:07.000.544,=D:\Comercial\Trabalho\Unit1.pas</Transaction>
+    <Transaction>2021/06/28 18:23:48.000.577,D:\Comercial\Trabalho\Unit1.dfm=D:\Comercial\Trabalho\Unit_DM.dfm</Transaction>
+    <Transaction>2021/06/28 18:23:48.000.577,D:\Comercial\Trabalho\Unit1.pas=D:\Comercial\Trabalho\Unit_DM.pas</Transaction>
+    <Transaction>2021/06/28 20:07:04.000.630,=D:\Comercial\Trabalho\Unit1.pas</Transaction>
+    <Transaction>2021/06/28 20:07:14.000.781,D:\Comercial\Trabalho\Unit1.pas=D:\Comercial\Trabalho\Unit_Persistencia.pas</Transaction>
+    <Transaction>2021/06/28 22:04:23.000.740,=D:\Comercial\Trabalho\Unit1.pas</Transaction>
+    <Transaction>2021/06/28 22:04:32.000.148,D:\Comercial\Trabalho\Unit1.pas=D:\Comercial\Trabalho\Unit_Utils.pas</Transaction>
+  </Transactions>
+</BorlandProject>

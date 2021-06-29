@@ -1,0 +1,14 @@
+program Trabalho_SuperMercado;
+
+uses
+  Vcl.Forms,
+  Unit_Principal in 'Unit_Principal.pas' {SuperMercadoDEF};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TSuperMercadoDEF, SuperMercadoDEF);
+  Application.Run;
+end.

@@ -1,0 +1,95 @@
+unit Unit_Persistencia;
+
+interface
+
+uses Unit_DM, Vcl.Dialogs, System.SysUtils, System.Variants;
+
+Type
+  Dados_Cliente = Record   //struct
+                    Cli_Codigo   : Integer;
+                    Cli_Nome     : String;
+                    Cli_Endereco : String;
+                    Cli_CPF      : String;
+                    Cli_Telefone : String;
+                    Cli_Email    : String;
+                    Cli_Sexo     : Integer;
+                    Cli_EstadoCivil: Integer;
+                    Cli_DataNascimento: String;
+                  End;
+  Clientes_Cadastrados = Array of Dados_Cliente;
+  Function Retorna_Clientes_Cadastrados(Condicao:String) : Clientes_Cadastrados;
+  Function Retorna_Proximo_Codigo:String;
+
+implementation
+
+Function Retorna_Proximo_Codigo:String;
+  Begin
+    With DM.qryAux Do
+      Begin
+        SQL.Clear;
+        SQL.Add('Select First 1 Cli_Codigo');
+        SQL.Add('From Cliente');
+        SQL.Add('Order By Cli_Codigo Desc');
+        ShowMessage(SQL.Text);
+        InputBox('','',SQL.Text);
+        Open;
+        FetchAll;
+        if ((DM.qryAux.RecordCount > 0) And (DM.qryAux['Cli_Codigo'] <> Null))
+          then Begin
+                 Result := IntToStr(DM.qryAux['Cli_Codigo'] + 1);
+               End
+          Else Begin
+                 Result := '1';
+               End;
+      End;
+  End;
+
+Function Retorna_Clientes_Cadastrados(Condicao:String) : Clientes_Cadastrados;
+Var
+  I : Integer;
+Begin
+  With DM.qryCliente Do
+     Begin
+       Close;
+       Open;
+       FetchAll; //garante que todos os resultados vieram pra memória
+       First;
+       if DM.qryCliente.RecordCount > 0
+         then Begin
+                for I := 1 to DM.qryCliente.RecordCount Do
+                Begin
+                  SetLength(Result,Length(Result)+1);
+                  if DM.qryCliente['Cli_Codigo'] <> Null
+                    then Result[I-1].Cli_Codigo := DM.qryCliente['Cli_Codigo']
+                    else Result[I-1].Cli_Codigo := -1;
+                  if DM.qryCliente['Cli_Nome'] <> Null
+                    then Result[I-1].Cli_Nome := DM.qryCliente['Cli_Nome']
+                    else Result[I-1].Cli_Nome := '';
+                  if DM.qryCliente['Cli_Endereco'] <> Null
+                    then Result[I-1].Cli_Endereco := DM.qryCliente['Cli_Endereco']
+                    else Result[I-1].Cli_Endereco := '';
+                  if DM.qryCliente['Cli_CPF'] <> Null
+                    then Result[I-1].Cli_CPF := DM.qryCliente['Cli_CPF']
+                    else Result[I-1].Cli_CPF := '';
+                  if DM.qryCliente['Cli_Telefone'] <> Null
+                    then Result[I-1].Cli_Telefone := DM.qryCliente['Cli_Telefone']
+                    else Result[I-1].Cli_Telefone := '';
+                  if DM.qryCliente['Cli_Email'] <> Null
+                    then Result[I-1].Cli_Email := DM.qryCliente['Cli_Email']
+                    else Result[I-1].Cli_Email := '';
+                  if DM.qryCliente['Cli_Sexo'] <> Null
+                    then Result[I-1].Cli_Sexo := DM.qryCliente['Cli_Sexo']
+                    else Result[I-1].Cli_Sexo := -1;
+                  if DM.qryCliente['Cli_EstadoCivil'] <> Null
+                    then Result[I-1].Cli_EstadoCivil := DM.qryCliente['Cli_EstadoCivil']
+                    else Result[I-1].Cli_EstadoCivil := -1;
+                  if DM.qryCliente['Cli_DataNascimento'] <> Null
+                    then Result[I-1].Cli_DataNascimento := DM.qryCliente['Cli_DataNascimento']
+                    else Result[I-1].Cli_DataNascimento := '';
+                  Next;
+                End;
+              End;
+     End;
+End;
+
+end.
