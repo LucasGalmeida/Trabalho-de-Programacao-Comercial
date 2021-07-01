@@ -1,0 +1,83 @@
+unit Unit_Principal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus,
+  Unit_Persistencia, Unit_Clientes, Unit_Supermercado, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  Vcl.Mask;
+
+type
+  TSuperMercadoDEF = class(TForm)
+    MenuPrincipal: TMainMenu;
+    Clientes: TMenuItem;
+    Cadastro: TMenuItem;
+    Fornecedores: TMenuItem;
+    Produtos: TMenuItem;
+    PanelPrincipal: TPanel;
+    PanelPrincipalInferior: TPanel;
+    btn_Fechar: TBitBtn;
+    BitBtn1: TBitBtn;
+    label_NomeFantasia: TLabel;
+    procedure ClientesClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure btn_FecharClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  SuperMercadoDEF: TSuperMercadoDEF;
+
+implementation
+
+{$R *.dfm}
+
+procedure TSuperMercadoDEF.BitBtn1Click(Sender: TObject);
+begin
+  Application.CreateForm(Tfrm_Supermercado, frm_Supermercado);
+  frm_Supermercado.ShowModal;
+  frm_Supermercado.Destroy;
+end;
+
+procedure TSuperMercadoDEF.btn_FecharClick(Sender: TObject);
+begin
+  Application.Terminate;
+end;
+
+procedure TSuperMercadoDEF.ClientesClick(Sender: TObject);
+begin
+  Application.CreateForm(Tfrm_Clientes, frm_Clientes);
+  frm_Clientes.ShowModal;
+  frm_Clientes.Destroy;
+end;
+
+
+procedure TSuperMercadoDEF.FormCreate(Sender: TObject);
+var Temp : Dados_Supermercado;
+begin
+
+  ShowMessage('segurou');
+
+  Application.CreateForm(Tfrm_Supermercado, frm_Supermercado);
+  Application.Destroy;
+
+
+  try
+    Temp := Unit_Persistencia.Recupera_Dados_Supermercado;
+  except
+    ShowMessage('Unknown error encountered');
+  End;
+
+
+
+
+//    label_NomeFantasia.Caption := Temp.Sup_NomeFantasia;
+
+end;
+
+end.

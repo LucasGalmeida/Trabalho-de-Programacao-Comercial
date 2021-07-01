@@ -3,5 +3,3 @@
 
 O trabalho consiste no desenvolvimento de um software para o gerenciamento de um supermercado.
 
-
-FALTA ADICIONAR O BANCO FIREBIRD

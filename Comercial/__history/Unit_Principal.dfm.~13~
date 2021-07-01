@@ -1,0 +1,59 @@
+object SuperMercadoDEF: TSuperMercadoDEF
+  Left = 0
+  Top = 0
+  Caption = 'SuperMercadoDEF'
+  ClientHeight = 710
+  ClientWidth = 1008
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Menu = MenuPrincipal
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object PanelPrincipal: TPanel
+    Left = 0
+    Top = 0
+    Width = 1008
+    Height = 710
+    Align = alClient
+    Color = clSkyBlue
+    ParentBackground = False
+    TabOrder = 0
+    ExplicitLeft = 336
+    ExplicitTop = 344
+    ExplicitWidth = 185
+    ExplicitHeight = 41
+    object PanelPrincipalInferior: TPanel
+      Left = 1
+      Top = 619
+      Width = 1006
+      Height = 90
+      Align = alBottom
+      Color = clActiveCaption
+      ParentBackground = False
+      TabOrder = 0
+      ExplicitTop = 632
+    end
+  end
+  object MenuPrincipal: TMainMenu
+    Left = 792
+    Top = 8
+    object Cadastro: TMenuItem
+      Caption = 'C&adastros'
+      object Clientes: TMenuItem
+        Caption = '&Clientes'
+        OnClick = ClientesClick
+      end
+      object Fornecedores: TMenuItem
+        Caption = '&Fornecedores'
+      end
+      object Produtos: TMenuItem
+        Caption = '&Produtos'
+      end
+    end
+  end
+end
