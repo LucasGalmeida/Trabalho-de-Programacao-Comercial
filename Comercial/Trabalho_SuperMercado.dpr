@@ -8,7 +8,8 @@ uses
   Unit_Persistencia in 'Unit_Persistencia.pas',
   Unit_Utils in 'Unit_Utils.pas',
   Unit_Supermercado in 'Unit_Supermercado.pas' {frm_Supermercado},
-  Unit_Produtos in 'Unit_Produtos.pas' {frm_Produtos};
+  Unit_Produtos in 'Unit_Produtos.pas' {frm_Produtos},
+  Unit_Fornecedor in 'Unit_Fornecedor.pas' {frm_Fornecedores};
 
 {$R *.res}
 
@@ -18,5 +19,6 @@ begin
   Application.CreateForm(TSuperMercadoDEF, SuperMercadoDEF);
   Application.CreateForm(TDM, DM);
   Application.CreateForm(Tfrm_Produtos, frm_Produtos);
+  Application.CreateForm(Tfrm_Fornecedores, frm_Fornecedores);
   Application.Run;
 end.

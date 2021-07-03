@@ -200,10 +200,38 @@ object SuperMercadoDEF: TSuperMercadoDEF
       end
       object Fornecedores: TMenuItem
         Caption = '&Fornecedores'
+        OnClick = FornecedoresClick
       end
       object Produtos: TMenuItem
         Caption = '&Produtos'
         OnClick = ProdutosClick
+      end
+    end
+    object ransaesFiscais1: TMenuItem
+      Caption = '&Transa'#231#245'es Fiscais'
+      object SaidadeProdutosvenda1: TMenuItem
+        Caption = 'Saida de Produtos (&Venda)'
+      end
+      object ContasaReceber1: TMenuItem
+        Caption = 'Contas a &Receber'
+      end
+      object ContasaPagar1: TMenuItem
+        Caption = 'Contas a &Pagar'
+      end
+      object Caixa1: TMenuItem
+        Caption = '&Caixa'
+      end
+      object EntradadeProdutos1: TMenuItem
+        Caption = '&Entrada de Produtos'
+      end
+    end
+    object BussinessIntelligence1: TMenuItem
+      Caption = '&Bussiness Intelligence'
+      object Relatrios1: TMenuItem
+        Caption = '&Relat'#243'rios'
+      end
+      object Grficos1: TMenuItem
+        Caption = '&Gr'#225'ficos'
       end
     end
   end

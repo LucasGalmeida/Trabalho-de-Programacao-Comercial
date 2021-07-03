@@ -61,6 +61,26 @@ Function Retorna_Produtos_Cadastrados(Condicao:String) : Produtos_Cadastrados;
 Function Retorna_Dados_Produto(Codigo : Integer) : Dados_Produto;
 Procedure Remove_Produto(Codigo : Integer);
 
+// Definicoes do Fornecedor
+Type
+  Dados_Fornecedor =  Record
+                        For_Codigo : Integer;
+                        For_NomeFantasia : String;
+                        For_RazaoSocial : String;
+                        For_InscricaoEstadual: String;
+                        For_CNPJ : String;
+                        For_Endereco : String;
+                        For_Telefone : String;
+                        For_Email: String;
+                      End;
+
+Fornecedores_Cadastrados = Array of Dados_Fornecedor;
+Function Retorna_Proximo_Codigo_Fornecedor : String;
+Procedure Grava_Dados_Fornecedor(Dados_Form : Dados_Fornecedor; Alterando:Boolean);
+Function Retorna_Fornecedores_Cadastrados(Condicao:String) : Fornecedores_Cadastrados;
+Function Retorna_Dados_Fornecedor(Codigo : Integer) : Dados_Fornecedor;
+Procedure Remove_Fornecedor(Codigo : Integer);
+
 implementation
 
 
@@ -482,6 +502,178 @@ Begin
       SQL.Clear;
       SQL.Add('Delete From Produto ');
       SQL.Add('Where Prod_Codigo = '+IntToStr(Codigo));
+      ExecSQL;
+      Commit;
+    End;
+End;
+
+// Funcoes do Fornecedor
+
+Function Retorna_Proximo_Codigo_Fornecedor:String;
+  Begin
+    With DM.qryAux Do
+      Begin
+        SQL.Clear;
+        SQL.Add('Select First 1 For_Codigo');
+        SQL.Add('From Fornecedor');
+        SQL.Add('Order By For_Codigo Desc');
+        Open;
+        FetchAll;
+        if ((DM.qryAux.RecordCount > 0) And (DM.qryAux['For_Codigo'] <> Null))
+          then Begin
+                 Result := IntToStr(DM.qryAux['For_Codigo'] + 1);
+               End
+          Else Begin
+                 Result := '1';
+               End;
+      End;
+  End;
+
+Procedure Grava_Dados_Fornecedor(Dados_Form : Dados_Fornecedor; Alterando:Boolean);
+Begin
+  if Not(Alterando)
+    then Begin
+            With DM.qryFornecedor Do
+               Begin
+                 Close;
+                 SQL.Clear;
+                 SQL.Add('Insert Into Fornecedor Values(');
+                 SQL.Add(IntToStr(Dados_Form.For_Codigo)+',');
+                 SQL.Add(QuotedStr(Dados_Form.For_NomeFantasia)+',');
+                 SQL.Add(QuotedStr(Dados_Form.For_RazaoSocial)+',');
+                 SQL.Add(QuotedStr(Dados_Form.For_InscricaoEstadual)+',');
+                 SQL.Add(QuotedStr(Dados_Form.For_CNPJ)+',');
+                 SQL.Add(QuotedStr(Dados_Form.For_Endereco)+',');
+                 SQL.Add(QuotedStr(Dados_Form.For_Telefone)+',');
+                 SQL.Add(QuotedStr(Dados_Form.For_Email)+')');
+                 ExecSQL;
+                 Commit;
+               End;
+         End
+    Else Begin
+            With DM.qryFornecedor Do
+               Begin
+                 Close;
+                 SQL.Clear;
+                 SQL.Add('Update Fornecedor Set');
+                 SQL.Add('For_NomeFantasia = '+QuotedStr(Dados_Form.For_NomeFantasia)+',');
+                 SQL.Add('For_RazaoSocial = '+QuotedStr(Dados_Form.For_RazaoSocial)+',');
+                 SQL.Add('For_InscricaoEstadual = '+QuotedStr(Dados_Form.For_InscricaoEstadual)+',');
+                 SQL.Add('For_CNPJ = '+QuotedStr(Dados_Form.For_CNPJ)+',');
+                 SQL.Add('For_Endereco = '+QuotedStr(Dados_Form.For_Endereco)+',');
+                 SQL.Add('For_Telefone = '+QuotedStr(Dados_Form.For_Telefone)+',');
+                 SQL.Add('For_Email = '+QuotedStr(Dados_Form.For_Email));
+                 SQL.Add('Where For_Codigo = '+IntToStr(Dados_Form.For_Codigo));
+                 ExecSQL;
+                 Commit;
+               End;
+         End;
+End;
+
+Function Retorna_Fornecedores_Cadastrados(Condicao:String) : Fornecedores_Cadastrados;
+Var
+  I : Integer;
+Begin
+  With DM.qryFornecedor Do
+     Begin
+       Close;
+       SQL.Clear;
+       SQL.Add('Select * From Fornecedor');
+       SQL.Add(Condicao);
+       Open;
+       FetchAll; //garante que todos os resultados vieram pra memória
+       First;
+       if DM.qryFornecedor.RecordCount > 0
+         then Begin
+                for I := 1 to DM.qryFornecedor.RecordCount Do
+                Begin
+                  SetLength(Result,Length(Result)+1);
+                  if DM.qryFornecedor['For_Codigo'] <> Null
+                    then Result[I-1].For_Codigo := DM.qryFornecedor['For_Codigo']
+                    else Result[I-1].For_Codigo := -1;
+                  if DM.qryFornecedor['For_NomeFantasia'] <> Null
+                    then Result[I-1].For_NomeFantasia := DM.qryFornecedor['For_NomeFantasia']
+                    else Result[I-1].For_NomeFantasia := '';
+                  if DM.qryFornecedor['For_RazaoSocial'] <> Null
+                    then Result[I-1].For_RazaoSocial := DM.qryFornecedor['For_RazaoSocial']
+                    else Result[I-1].For_RazaoSocial := '';
+                  if DM.qryFornecedor['For_InscricaoEstadual'] <> Null
+                    then Result[I-1].For_InscricaoEstadual := DM.qryFornecedor['For_InscricaoEstadual']
+                    else Result[I-1].For_InscricaoEstadual := '';
+                  if DM.qryFornecedor['For_CNPJ'] <> Null
+                    then Result[I-1].For_CNPJ := DM.qryFornecedor['For_CNPJ']
+                    else Result[I-1].For_CNPJ := '';
+                  if DM.qryFornecedor['For_Endereco'] <> Null
+                    then Result[I-1].For_Endereco := DM.qryFornecedor['For_Endereco']
+                    else Result[I-1].For_Endereco := '';
+                  if DM.qryFornecedor['For_Telefone'] <> Null
+                    then Result[I-1].For_Telefone := DM.qryFornecedor['For_Telefone']
+                    else Result[I-1].For_Telefone := '';
+                  if DM.qryFornecedor['For_Email'] <> Null
+                    then Result[I-1].For_Email := DM.qryFornecedor['For_Email']
+                    else Result[I-1].For_Email := '';
+                  Next;
+                End;
+              End;
+     End;
+End;
+
+Function Retorna_Dados_Fornecedor(Codigo : Integer) : Dados_Fornecedor;
+Var
+  I : Integer;
+Begin
+  With DM.qryFornecedor Do
+     Begin
+       Close;
+       SQL.Clear;
+       SQL.Add('Select * From Fornecedor');
+       SQL.Add('Where For_Codigo = '+IntToStr(Codigo));
+//       ExecSQL;
+       Open;
+       FetchAll; //garante que todos os resultados vieram pra memória
+       First;
+       if DM.qryFornecedor.RecordCount > 0
+         then Begin
+                for I := 1 to DM.qryFornecedor.RecordCount Do
+                Begin
+                  if DM.qryFornecedor['For_Codigo'] <> Null
+                    then Result.For_Codigo := DM.qryFornecedor['For_Codigo']
+                    else Result.For_Codigo := -1;
+                  if DM.qryFornecedor['For_NomeFantasia'] <> Null
+                    then Result.For_NomeFantasia := DM.qryFornecedor['For_NomeFantasia']
+                    else Result.For_NomeFantasia := '';
+                  if DM.qryFornecedor['For_RazaoSocial'] <> Null
+                    then Result.For_RazaoSocial := DM.qryFornecedor['For_RazaoSocial']
+                    else Result.For_RazaoSocial := '';
+                  if DM.qryFornecedor['For_InscricaoEstadual'] <> Null
+                    then Result.For_InscricaoEstadual := DM.qryFornecedor['For_InscricaoEstadual']
+                    else Result.For_InscricaoEstadual := '';
+                  if DM.qryFornecedor['For_CNPJ'] <> Null
+                    then Result.For_CNPJ := DM.qryFornecedor['For_CNPJ']
+                    else Result.For_CNPJ := '';
+                  if DM.qryFornecedor['For_Endereco'] <> Null
+                    then Result.For_Endereco := DM.qryFornecedor['For_Endereco']
+                    else Result.For_Endereco := '';
+                  if DM.qryFornecedor['For_Telefone'] <> Null
+                    then Result.For_Telefone := DM.qryFornecedor['For_Telefone']
+                    else Result.For_Telefone := '';
+                  if DM.qryFornecedor['For_Email'] <> Null
+                    then Result.For_Email := DM.qryFornecedor['For_Email']
+                    else Result.For_Email := '';
+                  Next;
+                End;
+              End;
+     End;
+End;
+
+Procedure Remove_Fornecedor(Codigo : Integer);
+Begin
+   With DM.qryFornecedor Do
+    Begin
+      Close;
+      SQL.Clear;
+      SQL.Add('Delete From Fornecedor ');
+      SQL.Add('Where For_Codigo = '+IntToStr(Codigo));
       ExecSQL;
       Commit;
     End;

@@ -122,6 +122,10 @@
             <Form>frm_Produtos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Unit_Fornecedor.pas">
+            <Form>frm_Fornecedores</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

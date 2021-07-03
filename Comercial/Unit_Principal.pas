@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus,
   Unit_Persistencia, Unit_Clientes, Unit_Produtos, Unit_Supermercado, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
-  Vcl.Mask;
+  Vcl.Mask, Unit_Fornecedor;
 
 type
   TSuperMercadoDEF = class(TForm)
@@ -29,11 +29,21 @@ type
     label_NomeResponsavel: TLabel;
     label_TelefoneResponsavel: TLabel;
     label_Lucro: TLabel;
+    ransaesFiscais1: TMenuItem;
+    SaidadeProdutosvenda1: TMenuItem;
+    ContasaReceber1: TMenuItem;
+    Caixa1: TMenuItem;
+    ContasaPagar1: TMenuItem;
+    EntradadeProdutos1: TMenuItem;
+    BussinessIntelligence1: TMenuItem;
+    Relatrios1: TMenuItem;
+    Grficos1: TMenuItem;
     procedure ClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure btn_FecharClick(Sender: TObject);
     procedure ProdutosClick(Sender: TObject);
+    procedure FornecedoresClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -92,6 +102,13 @@ begin
 
 //    label_NomeFantasia.Caption := Temp.Sup_NomeFantasia;
 
+end;
+
+procedure TSuperMercadoDEF.FornecedoresClick(Sender: TObject);
+begin
+  Application.CreateForm(Tfrm_Fornecedores, frm_Fornecedores);
+  frm_Fornecedores.ShowModal;
+  frm_Fornecedores.Destroy;
 end;
 
 procedure TSuperMercadoDEF.ProdutosClick(Sender: TObject);

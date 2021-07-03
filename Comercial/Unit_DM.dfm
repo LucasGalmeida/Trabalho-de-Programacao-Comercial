@@ -108,7 +108,10 @@ object DM: TDM
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'SELECT * FROM clientes')
+      'SELECT * FROM CLIENTE'
+      'SELECT * FROM FORNECEDOR'
+      'SELECT * FROM PRODUTO'
+      'SELECT * FROM SUPERMERCADO')
     Left = 352
     Top = 64
   end
@@ -258,5 +261,73 @@ object DM: TDM
     DataSet = IBTable3
     Left = 272
     Top = 280
+  end
+  object qryFornecedor: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    ForcedRefresh = True
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT * FROM FORNECEDOR')
+    Left = 104
+    Top = 336
+  end
+  object IBTable4: TIBTable
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'FOR_CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'FOR_NOMEFANTASIA'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'FOR_RAZAOSOCIAL'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'FOR_INSCRICAOESTADUAL'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'FOR_CNPJ'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'FOR_ENDERECO'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'FOR_TELEFONE'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'FOR_EMAIL'
+        DataType = ftWideString
+        Size = 20
+      end>
+    StoreDefs = True
+    TableName = 'FORNECEDOR'
+    UniDirectional = False
+    Left = 200
+    Top = 336
+  end
+  object DataSource4: TDataSource
+    DataSet = IBTable4
+    Left = 272
+    Top = 336
   end
 end
