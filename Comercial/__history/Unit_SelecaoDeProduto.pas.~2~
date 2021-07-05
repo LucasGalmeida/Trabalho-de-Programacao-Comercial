@@ -1,0 +1,25 @@
+unit Unit_SelecaoDeProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids;
+
+type
+  Tfrm_SelecaoDeProdutos = class(TForm)
+    Grid_Produtos: TStringGrid;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_SelecaoDeProdutos: Tfrm_SelecaoDeProdutos;
+
+implementation
+
+{$R *.dfm}
+
+end.

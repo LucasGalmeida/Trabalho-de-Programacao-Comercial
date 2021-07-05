@@ -59,6 +59,7 @@ type
       var AllowChange: Boolean);
     procedure Grid_FornecedoresSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
     procedure Grid_FornecedoresKeyPress(Sender: TObject; var Key: Char);
+    procedure cbx_PesquisaFornecedorChange(Sender: TObject);
 
   private
     { Private declarations }
@@ -144,6 +145,12 @@ begin
   for_Codigo.Text := Retorna_Proximo_Codigo_Fornecedor;
   Habilita_Botoes('01110');
   Alterando := False;
+end;
+
+procedure Tfrm_Fornecedores.cbx_PesquisaFornecedorChange(Sender: TObject);
+begin
+  for_Pesquisa.Enabled := True;
+  for_Pesquisa.Text := '';
 end;
 
 /// Falta controlar que apenas NUMEROS possam ser digitados nos campos de preco e estoque

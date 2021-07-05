@@ -1,0 +1,32 @@
+unit Unit_SelecaoDeProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls, Vcl.Mask,
+  Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  Tfrm_SelecaoDeProdutos = class(TForm)
+    Grid_Produtos: TStringGrid;
+    cli_Panel1: TPanel;
+    prod_ComboBox: TLabel;
+    label_Pesquisa: TLabel;
+    btn_Fechar1: TBitBtn;
+    cbx_PesquisaProduto: TComboBox;
+    prod_Pesquisa: TMaskEdit;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_SelecaoDeProdutos: Tfrm_SelecaoDeProdutos;
+
+implementation
+
+{$R *.dfm}
+
+end.

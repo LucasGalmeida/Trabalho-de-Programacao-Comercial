@@ -54,6 +54,7 @@ type
       var AllowChange: Boolean);
     procedure Grid_ProdutosSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
     procedure Grid_ProdutosKeyPress(Sender: TObject; var Key: Char);
+    procedure cbx_PesquisaProdutoChange(Sender: TObject);
     
   private
     { Private declarations }
@@ -135,6 +136,12 @@ begin
   prod_Codigo.Text := Retorna_Proximo_Codigo_Produto;
   Habilita_Botoes('01110');
   Alterando := False;
+end;
+
+procedure Tfrm_Produtos.cbx_PesquisaProdutoChange(Sender: TObject);
+begin
+  prod_Pesquisa.Enabled := True;
+  prod_Pesquisa.Text := '';
 end;
 
 /// Falta controlar que apenas NUMEROS possam ser digitados nos campos de preco e estoque

@@ -9,7 +9,9 @@ uses
   Unit_Utils in 'Unit_Utils.pas',
   Unit_Supermercado in 'Unit_Supermercado.pas' {frm_Supermercado},
   Unit_Produtos in 'Unit_Produtos.pas' {frm_Produtos},
-  Unit_Fornecedor in 'Unit_Fornecedor.pas' {frm_Fornecedores};
+  Unit_Fornecedor in 'Unit_Fornecedor.pas' {frm_Fornecedores},
+  Unit_Venda in 'Unit_Venda.pas' {frm_Venda},
+  Unit_SelecaoDeProdutos in 'Unit_SelecaoDeProdutos.pas' {frm_SelecaoDeProdutos};
 
 {$R *.res}
 
@@ -20,5 +22,7 @@ begin
   Application.CreateForm(TDM, DM);
   Application.CreateForm(Tfrm_Produtos, frm_Produtos);
   Application.CreateForm(Tfrm_Fornecedores, frm_Fornecedores);
+  Application.CreateForm(Tfrm_Venda, frm_Venda);
+  Application.CreateForm(Tfrm_SelecaoDeProdutos, frm_SelecaoDeProdutos);
   Application.Run;
 end.

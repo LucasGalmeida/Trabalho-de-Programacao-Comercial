@@ -1,0 +1,100 @@
+unit Unit_SelecaoDeProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls, Vcl.Mask,
+  Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  Tfrm_SelecaoDeProdutos = class(TForm)
+    Grid_Produtos: TStringGrid;
+    cli_Panel1: TPanel;
+    prod_ComboBox: TLabel;
+    label_Pesquisa: TLabel;
+    btn_Fechar1: TBitBtn;
+    cbx_PesquisaProduto: TComboBox;
+    prod_Pesquisa: TMaskEdit;
+    Procedure Pinta_Grid;
+    Procedure Popula_Grid(Condicao : String);
+    procedure prod_PesquisaChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_SelecaoDeProdutos: Tfrm_SelecaoDeProdutos;
+
+implementation
+
+uses Unit_Persistencia;
+
+Procedure Tfrm_SelecaoDeProdutos.Popula_Grid(Condicao : String);
+Var
+  Produtos_Atuais : Produtos_Cadastrados;
+  I : Integer;
+Begin
+  SetLength(Produtos_Atuais,0);
+  Grid_Produtos.RowCount := 2;
+  Grid_Produtos.Cells[0,1] := '';
+  Grid_Produtos.Cells[1,1] := '';
+  Grid_Produtos.Cells[2,1] := '';
+  Grid_Produtos.Cells[3,1] := '';
+  Grid_Produtos.Cells[4,1] := '';
+  Grid_Produtos.Cells[5,1] := '';
+
+  Produtos_Atuais := Retorna_Produtos_Cadastrados(Condicao);
+
+  For I := 0 To Length(Produtos_Atuais)-1 Do
+    Begin
+      Grid_Produtos.RowCount := Grid_Produtos.RowCount + 1;
+      Grid_Produtos.Cells[0,I+1] := IntToStr(Produtos_Atuais[I].Prod_Codigo);
+      Grid_Produtos.Cells[1,I+1] := Produtos_Atuais[I].Prod_Descricao;
+      Grid_Produtos.Cells[2,I+1] := IntToStr(Produtos_Atuais[I].Prod_Estoque);
+      Grid_Produtos.Cells[3,I+1] := IntToStr(Produtos_Atuais[I].Prod_EstoqueMinimo);
+      Grid_Produtos.Cells[4,I+1] := Produtos_Atuais[I].Prod_PrecoCusto;
+      Grid_Produtos.Cells[5,I+1] := Produtos_Atuais[I].Prod_PrecoVenda;
+    End;
+  Grid_Produtos.RowCount := Grid_Produtos.RowCount - 1;
+End;
+
+Procedure Tfrm_SelecaoDeProdutos.Pinta_Grid;
+begin
+  Grid_Produtos.Cells[0,0] := 'Cód.';
+  Grid_Produtos.Cells[1,0] := 'Descrição';
+  Grid_Produtos.Cells[2,0] := 'Estoque';
+  Grid_Produtos.Cells[3,0] := 'Estoque Minimo';
+  Grid_Produtos.Cells[4,0] := 'Preço de Custo';
+  Grid_Produtos.Cells[5,0] := 'Preço de Venda';
+  Grid_Produtos.ColWidths[0] := 50;
+  Grid_Produtos.ColWidths[1] := 300;
+  Grid_Produtos.ColWidths[2] := 100;
+  Grid_Produtos.ColWidths[3] := 100;
+  Grid_Produtos.ColWidths[4] := 150;
+  Grid_Produtos.ColWidths[5] := 150;
+end;
+
+ procedure Tfrm_SelecaoDeProdutos.prod_PesquisaChange(Sender: TObject);
+begin
+  if prod_Pesquisa.Text = ''
+    then Begin
+           Popula_Grid('');
+           Exit;
+         End;
+  case cbx_PesquisaProduto.ItemIndex of
+    0 : Popula_Grid('Where Prod_Codigo = '+prod_Pesquisa.Text) ;
+    1 : Popula_Grid('Where Prod_Descricao Like '+QuotedStr(prod_Pesquisa.Text+'%')) ;
+    2 : Popula_Grid('Where Prod_Estoque = '+prod_Pesquisa.Text) ;
+    3 : Popula_Grid('Where Prod_EstoqueMinimo = '+prod_Pesquisa.Text) ;
+    4 : Popula_Grid('Where Prod_PrecoCusto Like '+QuotedStr(prod_Pesquisa.Text+'%')) ;
+    5 : Popula_Grid('Where Prod_PrecoVenda Like '+QuotedStr(prod_Pesquisa.Text+'%')) ;
+
+  end;
+end;
+
+{$R *.dfm}
+
+end.

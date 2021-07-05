@@ -44,6 +44,7 @@ type
     procedure btn_FecharClick(Sender: TObject);
     procedure ProdutosClick(Sender: TObject);
     procedure FornecedoresClick(Sender: TObject);
+    procedure SaidadeProdutosvenda1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -56,6 +57,8 @@ var
 implementation
 
 {$R *.dfm}
+
+uses Unit_Venda;
 
 procedure TSuperMercadoDEF.BitBtn1Click(Sender: TObject);
 begin
@@ -116,6 +119,13 @@ begin
   Application.CreateForm(Tfrm_Produtos, frm_Produtos);
   frm_Produtos.ShowModal;
   frm_Produtos.Destroy;
+end;
+
+procedure TSuperMercadoDEF.SaidadeProdutosvenda1Click(Sender: TObject);
+begin
+  Application.CreateForm(Tfrm_Venda, frm_Venda);
+  frm_Venda.ShowModal;
+  frm_Venda.Destroy;
 end;
 
 end.
