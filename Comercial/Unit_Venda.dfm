@@ -27,10 +27,6 @@ object frm_Venda: Tfrm_Venda
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitLeft = 376
-    ExplicitTop = 256
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object panel_VendaBotoes: TPanel
       Left = 1
       Top = 639
@@ -38,7 +34,6 @@ object frm_Venda: Tfrm_Venda
       Height = 90
       Align = alBottom
       TabOrder = 0
-      ExplicitTop = 632
       object btn_Fechar: TBitBtn
         Left = 824
         Top = 22
@@ -82,12 +77,9 @@ object frm_Venda: Tfrm_Venda
       Width = 1006
       Height = 638
       Align = alClient
+      ColCount = 6
       RowCount = 2
       TabOrder = 1
-      ExplicitLeft = 400
-      ExplicitTop = 264
-      ExplicitWidth = 320
-      ExplicitHeight = 120
     end
   end
 end

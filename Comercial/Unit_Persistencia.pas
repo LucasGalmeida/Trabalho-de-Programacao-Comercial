@@ -81,6 +81,9 @@ Function Retorna_Fornecedores_Cadastrados(Condicao:String) : Fornecedores_Cadast
 Function Retorna_Dados_Fornecedor(Codigo : Integer) : Dados_Fornecedor;
 Procedure Remove_Fornecedor(Codigo : Integer);
 
+
+Procedure Commit;
+
 implementation
 
 

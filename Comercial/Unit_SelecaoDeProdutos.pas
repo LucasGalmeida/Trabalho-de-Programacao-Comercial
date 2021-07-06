@@ -10,7 +10,7 @@ uses
 type
   Tfrm_SelecaoDeProdutos = class(TForm)
     Grid_Produtos: TStringGrid;
-    cli_Panel1: TPanel;
+    prod_Panel1: TPanel;
     prod_ComboBox: TLabel;
     label_Pesquisa: TLabel;
     btn_Fechar1: TBitBtn;
@@ -118,6 +118,23 @@ begin
    Popula_Grid('');
 end;
 
+Function Preco_Total() : String;
+var
+  I : Integer;
+  count : Extended;
+  TotalDeLinhas : Integer;
+  aux : String;
+Begin
+  count := 0;
+  TotalDeLinhas := frm_Venda.GRID_Carrinho.RowCount - 2;
+  For I := 1 To TotalDeLinhas Do
+    Begin
+       aux := frm_Venda.GRID_Carrinho.Cells[5, I];
+       count := count + StrToFloat(aux);
+    End;
+  Result := FloatToStr(count);
+end;
+
 Procedure Tfrm_SelecaoDeProdutos.Grid_ProdutosDblClick(Sender: TObject);
 var Temp : Dados_Produto;
 var Qtd  : String;
@@ -130,8 +147,9 @@ begin
   Temp := Retorna_Dados_Produto(StrToInt(Grid_Produtos.Cells[0,Linha]));
 
   Qtd := InputBox('Digite a Quantidade','Digite a Quantidade', '0');
-  if Qtd > IntToStr(Temp.Prod_Estoque)
+  if StrToInt(Qtd) > Temp.Prod_Estoque
   then begin
+     ShowMessage(Qtd + IntToStr(Temp.Prod_Estoque));
      ShowMessage('Quantidade superior ao estoque atual.');
   end
   else if Qtd = '0' then
@@ -140,15 +158,20 @@ begin
        end
   else begin
     frm_Venda.GRID_Carrinho.RowCount := frm_Venda.GRID_Carrinho.RowCount + 1;
-    frm_Venda.GRID_Carrinho.Cells[0, frm_Venda.GRID_Carrinho.RowCount - 2] := Temp.Prod_Descricao;
-    frm_Venda.GRID_Carrinho.Cells[1, frm_Venda.GRID_Carrinho.RowCount - 2] := Qtd;
-    frm_Venda.GRID_Carrinho.Cells[2, frm_Venda.GRID_Carrinho.RowCount - 2] := IntToStr(Temp.Prod_Estoque);
-    frm_Venda.GRID_Carrinho.Cells[3, frm_Venda.GRID_Carrinho.RowCount - 2] := Temp.Prod_PrecoVenda;
+    frm_Venda.GRID_Carrinho.Cells[0, frm_Venda.GRID_Carrinho.RowCount - 2] := IntToStr(Temp.Prod_Codigo);
+    frm_Venda.GRID_Carrinho.Cells[1, frm_Venda.GRID_Carrinho.RowCount - 2] := Temp.Prod_Descricao;
+    frm_Venda.GRID_Carrinho.Cells[2, frm_Venda.GRID_Carrinho.RowCount - 2] := Qtd;
+    frm_Venda.GRID_Carrinho.Cells[3, frm_Venda.GRID_Carrinho.RowCount - 2] := IntToStr(Temp.Prod_Estoque);
+    frm_Venda.GRID_Carrinho.Cells[4, frm_Venda.GRID_Carrinho.RowCount - 2] := Temp.Prod_PrecoVenda;
 
     aux1 := StrToFloat(Temp.Prod_PrecoVenda);
     aux2 := StrToInt(Qtd);
 
-    frm_Venda.GRID_Carrinho.Cells[4, frm_Venda.GRID_Carrinho.RowCount - 2] := FloatToStr(aux1 * aux2);
+    frm_Venda.GRID_Carrinho.Cells[5, frm_Venda.GRID_Carrinho.RowCount - 2] := FloatToStr(aux1 * aux2);
+
+    frm_Venda.GRID_Carrinho.Cells[4, frm_Venda.GRID_Carrinho.RowCount - 1] := 'Total da Compra:';
+    frm_Venda.GRID_Carrinho.Cells[5, frm_Venda.GRID_Carrinho.RowCount - 1] := Preco_Total;
+
     frm_SelecaoDeProdutos.Close;
   end;
 

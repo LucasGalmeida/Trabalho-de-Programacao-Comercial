@@ -11,7 +11,8 @@ uses
   Unit_Produtos in 'Unit_Produtos.pas' {frm_Produtos},
   Unit_Fornecedor in 'Unit_Fornecedor.pas' {frm_Fornecedores},
   Unit_Venda in 'Unit_Venda.pas' {frm_Venda},
-  Unit_SelecaoDeProdutos in 'Unit_SelecaoDeProdutos.pas' {frm_SelecaoDeProdutos};
+  Unit_SelecaoDeProdutos in 'Unit_SelecaoDeProdutos.pas' {frm_SelecaoDeProdutos},
+  Unit_SelecaoDeClientes in 'Unit_SelecaoDeClientes.pas' {frm_SelecaoDeClientes};
 
 {$R *.res}
 
@@ -24,5 +25,6 @@ begin
   Application.CreateForm(Tfrm_Fornecedores, frm_Fornecedores);
   Application.CreateForm(Tfrm_Venda, frm_Venda);
   Application.CreateForm(Tfrm_SelecaoDeProdutos, frm_SelecaoDeProdutos);
+  Application.CreateForm(Tfrm_SelecaoDeClientes, frm_SelecaoDeClientes);
   Application.Run;
 end.

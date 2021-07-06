@@ -47,6 +47,12 @@
         ColCount = 9
         FixedCols = 0
         RowCount = 2
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
         PopupMenu = PopupGridClientes
         TabOrder = 0
         OnDblClick = PopupEditarClienteClick

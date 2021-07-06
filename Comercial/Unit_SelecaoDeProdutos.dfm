@@ -1,19 +1,19 @@
 object frm_SelecaoDeProdutos: Tfrm_SelecaoDeProdutos
   Left = 0
   Top = 0
-  Caption = 'Selecione o produto'
+  Caption = 'Selecione o Produto'
   ClientHeight = 730
   ClientWidth = 1008
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -16
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 19
   object Grid_Produtos: TStringGrid
     Left = 0
     Top = 0
@@ -26,10 +26,15 @@ object frm_SelecaoDeProdutos: Tfrm_SelecaoDeProdutos
     TabOrder = 0
     OnDblClick = Grid_ProdutosDblClick
     OnSelectCell = Grid_ProdutosSelectCell
-    ExplicitWidth = 908
-    ExplicitHeight = 768
+    ColWidths = (
+      64
+      64
+      64
+      64
+      64
+      64)
   end
-  object cli_Panel1: TPanel
+  object prod_Panel1: TPanel
     Left = 0
     Top = 640
     Width = 1008
@@ -43,8 +48,6 @@ object frm_SelecaoDeProdutos: Tfrm_SelecaoDeProdutos
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
-    ExplicitTop = 600
-    ExplicitWidth = 1000
     object prod_ComboBox: TLabel
       Left = 8
       Top = 6
