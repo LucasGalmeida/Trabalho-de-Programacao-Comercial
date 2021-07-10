@@ -1,0 +1,108 @@
+object frm_caixa: Tfrm_caixa
+  Left = 0
+  Top = 0
+  Caption = 'Caixa'
+  ClientHeight = 730
+  ClientWidth = 1008
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object cai_panel: TPanel
+    Left = 568
+    Top = 0
+    Width = 440
+    Height = 730
+    Align = alRight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    object cai_Label: TLabel
+      Left = 168
+      Top = 64
+      Width = 101
+      Height = 45
+      Caption = 'CAIXA'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -37
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object cai_Fechar: TBitBtn
+      Left = 256
+      Top = 648
+      Width = 140
+      Height = 50
+      Caption = 'Fechar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+      OnClick = cai_FecharClick
+    end
+    object cai_Lancamento: TBitBtn
+      Left = 48
+      Top = 648
+      Width = 140
+      Height = 50
+      Caption = 'Lan'#231'amento'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+    end
+    object cai_ValorTotal: TLabeledEdit
+      Left = 183
+      Top = 240
+      Width = 158
+      Height = 33
+      EditLabel.Width = 101
+      EditLabel.Height = 25
+      EditLabel.Caption = 'Valor Total'
+      Enabled = False
+      LabelPosition = lpLeft
+      LabelSpacing = 10
+      TabOrder = 2
+    end
+    object cai_ValorDisponivel: TLabeledEdit
+      Left = 183
+      Top = 397
+      Width = 158
+      Height = 33
+      EditLabel.Width = 149
+      EditLabel.Height = 25
+      EditLabel.Caption = 'Valor Dispon'#237'vel'
+      Enabled = False
+      LabelPosition = lpLeft
+      LabelSpacing = 10
+      TabOrder = 3
+    end
+  end
+  object GRID_Caixa: TStringGrid
+    Left = 0
+    Top = 0
+    Width = 569
+    Height = 730
+    Align = alLeft
+    ColCount = 4
+    RowCount = 2
+    TabOrder = 1
+  end
+end

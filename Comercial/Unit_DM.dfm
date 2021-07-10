@@ -2,8 +2,8 @@ object DM: TDM
   Left = 0
   Top = 0
   Caption = 'DM'
-  ClientHeight = 565
-  ClientWidth = 635
+  ClientHeight = 779
+  ClientWidth = 891
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -111,7 +111,9 @@ object DM: TDM
       'SELECT * FROM CLIENTE'
       'SELECT * FROM FORNECEDOR'
       'SELECT * FROM PRODUTO'
-      'SELECT * FROM SUPERMERCADO')
+      'SELECT * FROM SUPERMERCADO'
+      'SELECT * FROM CAIXA'
+      '')
     Left = 352
     Top = 64
   end
@@ -329,5 +331,57 @@ object DM: TDM
     DataSet = IBTable4
     Left = 272
     Top = 336
+  end
+  object qryCaixa: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    ForcedRefresh = True
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT * FROM CAIXA')
+    Left = 104
+    Top = 392
+  end
+  object IBTable5: TIBTable
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CAI_CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CAI_DESCRICAO'
+        DataType = ftWideString
+        Size = 100
+      end
+      item
+        Name = 'CAI_VALOR'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'CAI_DATA'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'CAI_CODIGONOTA'
+        DataType = ftInteger
+      end>
+    StoreDefs = True
+    TableName = 'CAIXA'
+    UniDirectional = False
+    Left = 200
+    Top = 392
+  end
+  object DataSource5: TDataSource
+    DataSet = IBTable5
+    Left = 272
+    Top = 392
   end
 end

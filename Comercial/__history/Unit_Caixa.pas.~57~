@@ -1,0 +1,166 @@
+unit Unit_Caixa;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons,
+  Vcl.Grids, Unit_Persistencia, System.DateUtils;
+
+type
+  Tfrm_Caixa = class(TForm)
+    cai_panel: TPanel;
+    GRID_Caixa: TStringGrid;
+    cai_Label: TLabel;
+    cai_Fechar: TBitBtn;
+    cai_Lancamento: TBitBtn;
+    cai_ValorTotal: TLabeledEdit;
+    cai_ValorDisponivel: TLabeledEdit;
+    procedure cai_FecharClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    Procedure Pinta_Grid;
+    Procedure Popula_Grid(Condicao : String);
+    Procedure Calcula_Valor_Total;
+    Procedure Calcula_Valor_Disponivel;
+    procedure cai_LancamentoClick(Sender: TObject);
+    procedure Insere_Caixa(Descricao: String; Valor: String; CodigoNota: Integer);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_Caixa: Tfrm_Caixa;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_Caixa.cai_FecharClick(Sender: TObject);
+begin
+  frm_Caixa.Close;
+end;
+
+Procedure Tfrm_Caixa.Pinta_Grid;
+begin
+  GRID_Caixa.Cells[0,0] := 'Cód.';
+  GRID_Caixa.Cells[1,0] := 'Descricao';
+  GRID_Caixa.Cells[2,0] := 'Valor';
+  GRID_Caixa.Cells[3,0] := 'Data';
+  GRID_Caixa.Cells[4,0] := 'Nota';
+  GRID_Caixa.ColWidths[0] := 50;
+  GRID_Caixa.ColWidths[1] := 200;
+  GRID_Caixa.ColWidths[2] := 75;
+  GRID_Caixa.ColWidths[3] := 125;
+  GRID_Caixa.ColWidths[4] := 100;
+end;
+
+Procedure Tfrm_Caixa.Popula_Grid(Condicao : String);
+Var
+  Transacoes_Atuais : Transacoes_Realizadas;
+  I : Integer;
+  aux : String;
+Begin
+  SetLength(Transacoes_Atuais,0);
+  GRID_Caixa.RowCount := 2;
+  GRID_Caixa.Cells[0,1] := '';
+  GRID_Caixa.Cells[1,1] := '';
+  GRID_Caixa.Cells[2,1] := '';
+  GRID_Caixa.Cells[3,1] := '';
+  GRID_Caixa.Cells[4,1] := '';
+
+  Transacoes_Atuais := Retorna_Transacoes_Realizadas(Condicao);
+
+  For I := 0 To Length(Transacoes_Atuais)-1 Do
+    Begin
+      GRID_Caixa.RowCount := GRID_Caixa.RowCount + 1;
+      GRID_Caixa.Cells[0,I+1] := IntToStr(Transacoes_Atuais[I].Cai_Codigo);
+      GRID_Caixa.Cells[1,I+1] := Transacoes_Atuais[I].Cai_Descricao;
+      GRID_Caixa.Cells[2,I+1] := Transacoes_Atuais[I].Cai_Valor;
+      GRID_Caixa.Cells[3,I+1] := Transacoes_Atuais[I].Cai_Data;
+      if IntToStr(Transacoes_Atuais[I].Cai_CodigoNota) = '-1' then
+      begin
+        aux := '-/-';
+      end
+      else begin
+        aux := IntToStr(Transacoes_Atuais[I].Cai_CodigoNota);
+      end;
+      GRID_Caixa.Cells[4,I+1] := aux;
+    End;
+  GRID_Caixa.RowCount := GRID_Caixa.RowCount - 1;
+
+End;
+
+procedure Tfrm_Caixa.Insere_Caixa(Descricao: String; Valor: String; CodigoNota: Integer);
+var Dados_Form : Dados_Transacao;
+begin
+  Dados_Form.Cai_Codigo := StrToInt(Retorna_Proximo_Codigo_Transacao);
+  Dados_Form.Cai_Descricao := Descricao;
+  Dados_Form.Cai_Valor := Valor;
+  Dados_Form.Cai_Data := FormatDateTime('dd.mm.yyyy hh:MM:ss', Now);
+  Dados_Form.Cai_CodigoNota := CodigoNota;
+  Grava_Dados_Transacao(Dados_Form);
+end;
+
+procedure Tfrm_Caixa.cai_LancamentoClick(Sender: TObject);
+var Valor     : String;
+var Descricao : String;
+begin
+  Valor := InputBox('Digite o Valor', 'Digite o valor a ser lançado', '0');
+  if Valor = '0'
+  then begin
+     ShowMessage('Quantidade deve ser maior ou inferior a 0.');
+  end
+  else begin
+    Descricao := InputBox('Digite a Descrição', 'Digite a Descrição da Operação', '');
+    Insere_Caixa(Descricao,Valor, -1);
+    Popula_Grid('');
+  end;
+
+end;
+
+
+Procedure Tfrm_Caixa.Calcula_Valor_Total;
+var I : Integer;
+var Total : String;
+begin
+   Total := '0';
+   if GRID_Caixa.RowCount > 1 then
+   begin
+     for I := 1 to GRID_Caixa.RowCount-1 do
+     begin
+        Total := FloatToStr(StrToFloat(Total) + StrToFloat(GRID_Caixa.Cells[2,I]));
+     end;
+     cai_ValorTotal.Text := Total;
+   end;
+end;
+
+Procedure Tfrm_Caixa.Calcula_Valor_Disponivel;
+var I : Integer;
+var Total : String;
+var Data : String;
+begin
+   Total := '0';
+   Data := FormatDateTime('dd.mm.yyyy', Today);
+   Popula_Grid('Where Cai_Data = 10.07.2021 11:31:50');
+   if GRID_Caixa.RowCount > 1 then
+   begin
+     for I := 1 to GRID_Caixa.RowCount-1 do
+     begin
+        Total := FloatToStr(StrToFloat(Total) + StrToFloat(GRID_Caixa.Cells[2,I]));
+     end;
+     cai_ValorDisponivel.Text := Total;
+   end;
+end;
+
+procedure Tfrm_Caixa.FormShow(Sender: TObject);
+begin
+   Pinta_Grid;
+   Popula_Grid('');
+   Calcula_Valor_Total;
+   Calcula_Valor_Disponivel;
+
+end;
+
+end.

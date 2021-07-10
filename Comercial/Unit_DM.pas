@@ -26,6 +26,9 @@ type
     qryFornecedor: TIBQuery;
     IBTable4: TIBTable;
     DataSource4: TDataSource;
+    qryCaixa: TIBQuery;
+    IBTable5: TIBTable;
+    DataSource5: TDataSource;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

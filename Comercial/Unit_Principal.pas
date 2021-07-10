@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus,
   Unit_Persistencia, Unit_Clientes, Unit_Produtos, Unit_Supermercado, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
-  Vcl.Mask, Unit_Fornecedor;
+  Vcl.Mask, Unit_Fornecedor, Unit_Caixa;
 
 type
   TSuperMercadoDEF = class(TForm)
@@ -45,6 +45,7 @@ type
     procedure ProdutosClick(Sender: TObject);
     procedure FornecedoresClick(Sender: TObject);
     procedure SaidadeProdutosvenda1Click(Sender: TObject);
+    procedure Caixa1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -70,6 +71,13 @@ end;
 procedure TSuperMercadoDEF.btn_FecharClick(Sender: TObject);
 begin
   Application.Terminate;
+end;
+
+procedure TSuperMercadoDEF.Caixa1Click(Sender: TObject);
+begin
+  Application.CreateForm(Tfrm_Caixa, frm_Caixa);
+  frm_Caixa.ShowModal;
+  frm_Caixa.Destroy;
 end;
 
 procedure TSuperMercadoDEF.ClientesClick(Sender: TObject);

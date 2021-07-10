@@ -221,6 +221,7 @@ object SuperMercadoDEF: TSuperMercadoDEF
       end
       object Caixa1: TMenuItem
         Caption = '&Caixa'
+        OnClick = Caixa1Click
       end
       object EntradadeProdutos1: TMenuItem
         Caption = '&Entrada de Produtos'

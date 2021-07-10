@@ -81,8 +81,24 @@ Function Retorna_Fornecedores_Cadastrados(Condicao:String) : Fornecedores_Cadast
 Function Retorna_Dados_Fornecedor(Codigo : Integer) : Dados_Fornecedor;
 Procedure Remove_Fornecedor(Codigo : Integer);
 
+// Definicoes do Caixa
+Type
+  Dados_Transacao = Record   //struct
+                    Cai_Codigo     : Integer;
+                    Cai_Descricao  : String;
+                    Cai_Valor      : String;
+                    Cai_Data       : String;
+                    Cai_CodigoNota : Integer;
+                  End;
+  Transacoes_Realizadas = Array of Dados_Transacao;
+  Function Retorna_Transacoes_Realizadas(Condicao:String) : Transacoes_Realizadas;
+  Function Retorna_Proximo_Codigo_Transacao : String;
+  Procedure Grava_Dados_Transacao(Dados_Form : Dados_Transacao);
 
+
+//Outras
 Procedure Commit;
+
 
 implementation
 
@@ -680,6 +696,84 @@ Begin
       ExecSQL;
       Commit;
     End;
+End;
+
+
+//  Funcoes do Caixa
+Function Retorna_Transacoes_Realizadas(Condicao:String) : Transacoes_Realizadas;
+Var
+  I : Integer;
+Begin
+  With DM.qryCaixa Do
+     Begin
+       Close;
+       SQL.Clear;
+       SQL.Add('Select * From Caixa');
+       SQL.Add(Condicao);
+       Open;
+       FetchAll; //garante que todos os resultados vieram pra memória
+       First;
+       if DM.qryCaixa.RecordCount > 0
+         then Begin
+                for I := 1 to DM.qryCaixa.RecordCount Do
+                Begin
+                  SetLength(Result,Length(Result)+1);
+                  if DM.qryCaixa['Cai_Codigo'] <> Null
+                    then Result[I-1].Cai_Codigo := DM.qryCaixa['Cai_Codigo']
+                    else Result[I-1].Cai_Codigo := -1;
+                  if DM.qryCaixa['Cai_Descricao'] <> Null
+                    then Result[I-1].Cai_Descricao := DM.qryCaixa['Cai_Descricao']
+                    else Result[I-1].Cai_Descricao := '';
+                  if DM.qryCaixa['Cai_Valor'] <> Null
+                    then Result[I-1].Cai_Valor := DM.qryCaixa['Cai_Valor']
+                    else Result[I-1].Cai_Valor := '';
+                  if DM.qryCaixa['Cai_Data'] <> Null
+                    then Result[I-1].Cai_Data := DM.qryCaixa['Cai_Data']
+                    else Result[I-1].Cai_Data := '';
+                  if DM.qryCaixa['Cai_CodigoNota'] <> Null
+                    then Result[I-1].Cai_CodigoNota := DM.qryCaixa['Cai_CodigoNota']
+                    else Result[I-1].Cai_CodigoNota := -1;
+                  Next;
+                End;
+              End;
+     End;
+end;
+
+Function Retorna_Proximo_Codigo_Transacao : String;
+begin
+ With DM.qryAux Do
+      Begin
+        SQL.Clear;
+        SQL.Add('Select First 1 Cai_Codigo');
+        SQL.Add('From Caixa');
+        SQL.Add('Order By Cai_Codigo Desc');
+        Open;
+        FetchAll;
+        if ((DM.qryAux.RecordCount > 0) And (DM.qryAux['Cai_Codigo'] <> Null))
+          then Begin
+                 Result := IntToStr(DM.qryAux['Cai_Codigo'] + 1);
+               End
+          Else Begin
+                 Result := '1';
+               End;
+      End;
+end;
+
+Procedure Grava_Dados_Transacao(Dados_Form : Dados_Transacao);
+Begin
+    With DM.qryCaixa Do
+       Begin
+         Close;
+         SQL.Clear;
+         SQL.Add('Insert Into Caixa Values(');
+         SQL.Add(IntToStr(Dados_Form.Cai_Codigo)+',');
+         SQL.Add(QuotedStr(Dados_Form.Cai_Descricao)+',');
+         SQL.Add(QuotedStr(Dados_Form.Cai_Valor)+',');
+         SQL.Add(QuotedStr(Dados_Form.Cai_Data)+',');
+         SQL.Add(IntToStr(Dados_Form.Cai_CodigoNota)+')');
+         ExecSQL;
+         Commit;
+       End;
 End;
 
 end.
