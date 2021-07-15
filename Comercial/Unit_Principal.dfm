@@ -215,9 +215,11 @@ object SuperMercadoDEF: TSuperMercadoDEF
       end
       object ContasaReceber1: TMenuItem
         Caption = 'Contas a &Receber'
+        OnClick = ContasaReceber1Click
       end
       object ContasaPagar1: TMenuItem
         Caption = 'Contas a &Pagar'
+        OnClick = ContasaPagar1Click
       end
       object Caixa1: TMenuItem
         Caption = '&Caixa'
@@ -225,6 +227,7 @@ object SuperMercadoDEF: TSuperMercadoDEF
       end
       object EntradadeProdutos1: TMenuItem
         Caption = '&Entrada de Produtos'
+        OnClick = EntradadeProdutos1Click
       end
     end
     object BussinessIntelligence1: TMenuItem

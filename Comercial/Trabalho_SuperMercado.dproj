@@ -142,6 +142,22 @@
             <Form>frm_Caixa</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Unit_ContasReceber.pas">
+            <Form>frm_ContasReceber</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Unit_ContasPagar.pas">
+            <Form>frm_ContasPagar</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Unit_Compra.pas">
+            <Form>frm_Compra</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Unit_SelecaoDeProdutosFornecedor.pas">
+            <Form>frm_SelecaoDeProdutosFornecedor</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

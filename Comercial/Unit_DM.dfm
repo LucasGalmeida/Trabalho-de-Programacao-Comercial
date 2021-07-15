@@ -384,4 +384,116 @@ object DM: TDM
     Left = 272
     Top = 392
   end
+  object qryContasReceber: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    ForcedRefresh = True
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT * FROM CAIXA')
+    Left = 104
+    Top = 448
+  end
+  object IBTable6: TIBTable
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CR_CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CR_CODIGOCLIENTE'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CR_DESCRICAO'
+        DataType = ftWideString
+        Size = 100
+      end
+      item
+        Name = 'CR_VALOR'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'CR_DATA'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'CR_CODIGONOTA'
+        DataType = ftInteger
+      end>
+    StoreDefs = True
+    TableName = 'CONTASRECEBER'
+    UniDirectional = False
+    Left = 200
+    Top = 448
+  end
+  object DataSource6: TDataSource
+    DataSet = IBTable6
+    Left = 272
+    Top = 448
+  end
+  object qryContasPagar: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    ForcedRefresh = True
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT * FROM CAIXA')
+    Left = 104
+    Top = 504
+  end
+  object IBTable7: TIBTable
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'CP_CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CP_CODIGOFORNECEDOR'
+        DataType = ftInteger
+      end
+      item
+        Name = 'CP_DESCRICAO'
+        DataType = ftWideString
+        Size = 100
+      end
+      item
+        Name = 'CP_VALOR'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'CP_DATA'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'CP_CODIGONOTA'
+        DataType = ftInteger
+      end>
+    StoreDefs = True
+    TableName = 'CONTASPAGAR'
+    UniDirectional = False
+    Left = 200
+    Top = 504
+  end
+  object DataSource7: TDataSource
+    DataSet = IBTable7
+    Left = 272
+    Top = 504
+  end
 end

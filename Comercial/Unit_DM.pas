@@ -29,6 +29,12 @@ type
     qryCaixa: TIBQuery;
     IBTable5: TIBTable;
     DataSource5: TDataSource;
+    qryContasReceber: TIBQuery;
+    IBTable6: TIBTable;
+    DataSource6: TDataSource;
+    qryContasPagar: TIBQuery;
+    IBTable7: TIBTable;
+    DataSource7: TDataSource;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

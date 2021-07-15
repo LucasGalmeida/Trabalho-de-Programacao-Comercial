@@ -95,13 +95,71 @@ Type
   Function Retorna_Proximo_Codigo_Transacao : String;
   Procedure Grava_Dados_Transacao(Dados_Form : Dados_Transacao);
 
+// Definicoes de Contas a Receber
+Type
+  Dados_ContasReceber = Record   //struct
+                    Cr_Codigo     : Integer;
+                    Cr_CodigoCliente : Integer;
+                    Cr_Descricao  : String;
+                    Cr_Valor      : String;
+                    Cr_Data       : String;
+                    Cr_CodigoNota : Integer;
+                  End;
+    Contas_Receber = Array of Dados_ContasReceber;
+Function Retorna_Proximo_Codigo_ContaReceber : String;
+Function Retorna_Contas_Receber(Condicao:String) : Contas_Receber;
+Procedure Grava_Dados_ContaReceber(Dados_Form : Dados_ContasReceber);
+
+// Definicoes de Contas a Pagar
+Type
+  Dados_ContasPagar = Record   //struct
+                    Cp_Codigo     : Integer;
+                    Cp_CodigoFornecedor : Integer;
+                    Cp_Descricao  : String;
+                    Cp_Valor      : String;
+                    Cp_Data       : String;
+                    Cp_CodigoNota : Integer;
+                  End;
+    Contas_Pagar = Array of Dados_ContasPagar;
+Function Retorna_Proximo_Codigo_ContaPagar : String;
+Function Retorna_Contas_Pagar(Condicao:String) : Contas_Pagar;
+Procedure Grava_Dados_ContaPagar(Dados_Form : Dados_ContasPagar);
+
+// Definicoes Nota Venda
+Type
+  Dados_NotaVenda = Record
+                      Nv_Codigo : Integer;
+                      Nv_CodigoCliente : Integer;
+                      Nv_ProdutosVendidos : String;
+                      Nv_Data : String;
+                      Nv_ValorTotal: String;
+                    End;
+    Notas_Venda = Array of Dados_NotaVenda;
+Function Retorna_Proximo_Codigo_NotaVenda : String;
+Function Retorna_NotasVenda(Condicao:String) : Notas_Venda;
+Function Retorna_NotaVenda(Codigo:Integer): Dados_NotaVenda;
+Procedure Grava_Dados_NotaVenda(Dados_Form : Dados_NotaVenda);
+
+// Definicoes Nota Compra
+Type
+  Dados_NotaCompra = Record
+                      Nc_Codigo : Integer;
+                      Nc_CodigoFornecedor : Integer;
+                      Nc_ProdutosComprados : String;
+                      Nc_Data : String;
+                      Nc_ValorTotal: String;
+                    End;
+        Notas_Compra = Array of Dados_NotaCompra;
+Function Retorna_Proximo_Codigo_NotaCompra : String;
+Function Retorna_NotasCompra(Condicao:String) : Notas_Compra;
+Function Retorna_NotaCompra(Codigo:Integer): Dados_NotaCompra;
+Procedure Grava_Dados_NotaCompra(Dados_Form : Dados_NotaCompra);
 
 //Outras
 Procedure Commit;
 
 
 implementation
-
 
 Procedure Commit;
 Begin
@@ -775,5 +833,201 @@ Begin
          Commit;
        End;
 End;
+
+// Operacoes Contas a Receber
+Function Retorna_Contas_Receber(Condicao:String) : Contas_Receber;
+Var
+  I : Integer;
+Begin
+  With DM.qryContasReceber Do
+     Begin
+       Close;
+       SQL.Clear;
+       SQL.Add('Select * From ContasReceber');
+       SQL.Add(Condicao);
+       Open;
+       FetchAll; //garante que todos os resultados vieram pra memória
+       First;
+       if DM.qryContasReceber.RecordCount > 0
+         then Begin
+                for I := 1 to DM.qryContasReceber.RecordCount Do
+                Begin
+                  SetLength(Result,Length(Result)+1);
+                  if DM.qryContasReceber['Cr_Codigo'] <> Null
+                    then Result[I-1].Cr_Codigo := DM.qryContasReceber['Cr_Codigo']
+                    else Result[I-1].Cr_Codigo := -1;
+                  if DM.qryContasReceber['Cr_CodigoCliente'] <> Null
+                    then Result[I-1].Cr_CodigoCliente := DM.qryContasReceber['Cr_CodigoCliente']
+                    else Result[I-1].Cr_CodigoCliente := -1;
+                  if DM.qryContasReceber['Cr_Descricao'] <> Null
+                    then Result[I-1].Cr_Descricao := DM.qryContasReceber['Cr_Descricao']
+                    else Result[I-1].Cr_Descricao := '';
+                  if DM.qryContasReceber['Cr_Valor'] <> Null
+                    then Result[I-1].Cr_Valor := DM.qryContasReceber['Cr_Valor']
+                    else Result[I-1].Cr_Valor := '';
+                  if DM.qryContasReceber['Cr_Data'] <> Null
+                    then Result[I-1].Cr_Data := DM.qryContasReceber['Cr_Data']
+                    else Result[I-1].Cr_Data := '';
+                  if DM.qryContasReceber['Cr_CodigoNota'] <> Null
+                    then Result[I-1].Cr_CodigoNota := DM.qryContasReceber['Cr_CodigoNota']
+                    else Result[I-1].Cr_CodigoNota := -1;
+                  Next;
+                End;
+              End;
+     End;
+end;
+
+Function Retorna_Proximo_Codigo_ContaReceber : String;
+begin
+ With DM.qryAux Do
+      Begin
+        SQL.Clear;
+        SQL.Add('Select First 1 Cr_Codigo');
+        SQL.Add('From ContasReceber');
+        SQL.Add('Order By Cr_Codigo Desc');
+        Open;
+        FetchAll;
+        if ((DM.qryAux.RecordCount > 0) And (DM.qryAux['Cr_Codigo'] <> Null))
+          then Begin
+                 Result := IntToStr(DM.qryAux['Cr_Codigo'] + 1);
+               End
+          Else Begin
+                 Result := '1';
+               End;
+      End;
+end;
+
+Procedure Grava_Dados_ContaReceber(Dados_Form : Dados_ContasReceber);
+Begin
+    With DM.qryContasReceber Do
+       Begin
+         Close;
+         SQL.Clear;
+         SQL.Add('Insert Into ContasReceber Values(');
+         SQL.Add(IntToStr(Dados_Form.Cr_Codigo)+',');
+         SQL.Add(IntToStr(Dados_Form.Cr_CodigoCliente)+',');
+         SQL.Add(QuotedStr(Dados_Form.Cr_Descricao)+',');
+         SQL.Add(QuotedStr(Dados_Form.Cr_Valor)+',');
+         SQL.Add(QuotedStr(Dados_Form.Cr_Data)+',');
+         SQL.Add(IntToStr(Dados_Form.Cr_CodigoNota)+')');
+         ExecSQL;
+         Commit;
+       End;
+End;
+
+// Operacoes Contas a Pagar
+Function Retorna_Contas_Pagar(Condicao:String) : Contas_Pagar;
+Var
+  I : Integer;
+Begin
+  With DM.qryContasPagar Do
+     Begin
+       Close;
+       SQL.Clear;
+       SQL.Add('Select * From ContasPagar');
+       SQL.Add(Condicao);
+       Open;
+       FetchAll; //garante que todos os resultados vieram pra memória
+       First;
+       if DM.qryContasPagar.RecordCount > 0
+         then Begin
+                for I := 1 to DM.qryContasPagar.RecordCount Do
+                Begin
+                  SetLength(Result,Length(Result)+1);
+                  if DM.qryContasPagar['Cp_Codigo'] <> Null
+                    then Result[I-1].Cp_Codigo := DM.qryContasPagar['Cp_Codigo']
+                    else Result[I-1].Cp_Codigo := -1;
+                  if DM.qryContasPagar['Cp_CodigoFornecedor'] <> Null
+                    then Result[I-1].Cp_CodigoFornecedor := DM.qryContasPagar['Cp_CodigoFornecedor']
+                    else Result[I-1].Cp_CodigoFornecedor := -1;
+                  if DM.qryContasPagar['Cp_Descricao'] <> Null
+                    then Result[I-1].Cp_Descricao := DM.qryContasPagar['Cp_Descricao']
+                    else Result[I-1].Cp_Descricao := '';
+                  if DM.qryContasPagar['Cp_Valor'] <> Null
+                    then Result[I-1].Cp_Valor := DM.qryContasPagar['Cp_Valor']
+                    else Result[I-1].Cp_Valor := '';
+                  if DM.qryContasPagar['Cp_Data'] <> Null
+                    then Result[I-1].Cp_Data := DM.qryContasPagar['Cp_Data']
+                    else Result[I-1].Cp_Data := '';
+                  if DM.qryContasPagar['Cp_CodigoNota'] <> Null
+                    then Result[I-1].Cp_CodigoNota := DM.qryContasPagar['Cp_CodigoNota']
+                    else Result[I-1].Cp_CodigoNota := -1;
+                  Next;
+                End;
+              End;
+     End;
+end;
+
+Function Retorna_Proximo_Codigo_ContaPagar : String;
+begin
+ With DM.qryAux Do
+      Begin
+        SQL.Clear;
+        SQL.Add('Select First 1 Cp_Codigo');
+        SQL.Add('From ContasPagar');
+        SQL.Add('Order By Cp_Codigo Desc');
+        Open;
+        FetchAll;
+        if ((DM.qryAux.RecordCount > 0) And (DM.qryAux['Cp_Codigo'] <> Null))
+          then Begin
+                 Result := IntToStr(DM.qryAux['Cp_Codigo'] + 1);
+               End
+          Else Begin
+                 Result := '1';
+               End;
+      End;
+end;
+
+Procedure Grava_Dados_ContaPagar(Dados_Form : Dados_ContasPagar);
+Begin
+    With DM.qryContasPagar Do
+       Begin
+         Close;
+         SQL.Clear;
+         SQL.Add('Insert Into ContasPagar Values(');
+         SQL.Add(IntToStr(Dados_Form.Cp_Codigo)+',');
+         SQL.Add(IntToStr(Dados_Form.Cp_CodigoFornecedor)+',');
+         SQL.Add(QuotedStr(Dados_Form.Cp_Descricao)+',');
+         SQL.Add(QuotedStr(Dados_Form.Cp_Valor)+',');
+         SQL.Add(QuotedStr(Dados_Form.Cp_Data)+',');
+         SQL.Add(IntToStr(Dados_Form.Cp_CodigoNota)+')');
+         ExecSQL;
+         Commit;
+       End;
+End;
+
+// Funcoes Nota Fiscal
+Function Retorna_Proximo_Codigo_NotaVenda : String;
+begin
+
+end;
+Function Retorna_NotasVenda(Condicao:String) : Notas_Venda;
+begin
+
+end;
+Function Retorna_NotaVenda(Codigo:Integer): Dados_NotaVenda;
+begin
+
+end;
+Procedure Grava_Dados_NotaVenda(Dados_Form : Dados_NotaVenda);
+begin
+
+end;
+Function Retorna_Proximo_Codigo_NotaCompra : String;
+begin
+
+end;
+Function Retorna_NotasCompra(Condicao:String) : Notas_Compra;
+begin
+
+end;
+Function Retorna_NotaCompra(Codigo:Integer): Dados_NotaCompra;
+begin
+
+end;
+Procedure Grava_Dados_NotaCompra(Dados_Form : Dados_NotaCompra);
+begin
+
+end;
 
 end.

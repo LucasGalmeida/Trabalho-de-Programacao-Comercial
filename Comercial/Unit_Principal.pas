@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus,
   Unit_Persistencia, Unit_Clientes, Unit_Produtos, Unit_Supermercado, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
-  Vcl.Mask, Unit_Fornecedor, Unit_Caixa;
+  Vcl.Mask, Unit_Fornecedor, Unit_Caixa, Unit_ContasReceber, Unit_ContasPagar;
 
 type
   TSuperMercadoDEF = class(TForm)
@@ -46,6 +46,9 @@ type
     procedure FornecedoresClick(Sender: TObject);
     procedure SaidadeProdutosvenda1Click(Sender: TObject);
     procedure Caixa1Click(Sender: TObject);
+    procedure ContasaReceber1Click(Sender: TObject);
+    procedure ContasaPagar1Click(Sender: TObject);
+    procedure EntradadeProdutos1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -59,7 +62,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_Venda;
+uses Unit_Venda, Unit_Compra;
 
 procedure TSuperMercadoDEF.BitBtn1Click(Sender: TObject);
 begin
@@ -87,6 +90,27 @@ begin
   frm_Clientes.Destroy;
 end;
 
+
+procedure TSuperMercadoDEF.ContasaPagar1Click(Sender: TObject);
+begin
+  Application.CreateForm(Tfrm_ContasPagar, frm_ContasPagar);
+  frm_ContasPagar.ShowModal;
+  frm_ContasPagar.Destroy;
+end;
+
+procedure TSuperMercadoDEF.ContasaReceber1Click(Sender: TObject);
+begin
+  Application.CreateForm(Tfrm_ContasReceber, frm_ContasReceber);
+  frm_ContasReceber.ShowModal;
+  frm_ContasReceber.Destroy;
+end;
+
+procedure TSuperMercadoDEF.EntradadeProdutos1Click(Sender: TObject);
+begin
+  Application.CreateForm(Tfrm_Compra, frm_Compra);
+  frm_Compra.ShowModal;
+  frm_Compra.Destroy;
+end;
 
 procedure TSuperMercadoDEF.FormCreate(Sender: TObject);
 var Temp : Dados_Supermercado;

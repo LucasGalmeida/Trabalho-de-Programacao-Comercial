@@ -38,7 +38,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_Venda;
+uses Unit_Venda, Unit_ContasReceber, Unit_SelecaoDeProdutos;
 
 Procedure Tfrm_SelecaoDeClientes.Popula_Grid(Condicao : String);
 Var
@@ -156,6 +156,7 @@ var Temp : Dados_Cliente;
 var Entrada : String;
 var QtdParcelas : String;
 var ValorAPagar : String;
+var I : Integer;
 begin
     Temp := Retorna_Dados_Cliente(StrToInt(Grid_Clientes.Cells[0,Linha]));
     Entrada := InputBox('Digite o valor de entrada','Digite a entrada', '0');
@@ -166,9 +167,23 @@ begin
        begin
          ShowMessage('Quantidade não pode ser igual a 0.');
        end
+    else if QtdParcelas > '6' then
+       begin
+         ShowMessage('Máximo de 6 parcelas.');
+       end
     else begin
-      // Fazer um laço e lançar para os próximos 'QtdParcelas' meses a quantidade a pagar
-      // Que é igual a 'ValorAPagar' / 'QtdParcelas'
+      For I := 0 To StrToInt(QtdParcelas)-1 Do
+      begin
+        frm_ContasReceber.Insere_ContaReceber(
+            Temp.Cli_Codigo,
+            'Parcela '+ IntToStr(I+1)+'/'+ QtdParcelas,
+            FloatToStr(StrToFloat(ValorAPagar)/StrToInt(QtdParcelas)),
+            -1
+            );
+      end;
+      frm_Venda.DiminuiEstoque;
+      ShowMessage('Venda realizada.');
+      frm_Venda.limpa_Carrinho;
       frm_SelecaoDeClientes.Close;
     end;
 

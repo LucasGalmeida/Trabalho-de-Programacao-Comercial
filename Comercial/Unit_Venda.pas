@@ -18,8 +18,8 @@ type
     GRID_Carrinho: TStringGrid;
     procedure btn_FecharClick(Sender: TObject);
     Procedure Pinta_Grid;
-    //Procedure DiminuiEstoque;
-    //procedure Limpa_Carrinho;
+    Procedure DiminuiEstoque;
+    procedure Limpa_Carrinho;
     procedure FormShow(Sender: TObject);
     procedure btn_addClick(Sender: TObject);
     procedure btn_VistaClick(Sender: TObject);
@@ -38,6 +38,8 @@ implementation
 
 {$R *.dfm}
 
+uses Unit_Caixa;
+
 procedure Tfrm_Venda.btn_addClick(Sender: TObject);
 begin
   Application.CreateForm(Tfrm_SelecaoDeProdutos, frm_SelecaoDeProdutos);
@@ -50,7 +52,7 @@ begin
   frm_Venda.Close;
 end;
 
-Procedure DiminuiEstoque;
+Procedure Tfrm_Venda.DiminuiEstoque;
 var I : Integer;
 var TotalDeLinhas : Integer;
 var aux : String;
@@ -66,14 +68,13 @@ begin
                  aux := IntToStr(StrToInt(frm_Venda.GRID_Carrinho.Cells[3,I]) - StrToInt(frm_Venda.GRID_Carrinho.Cells[2,I]));
                  SQL.Add('Prod_Estoque = '+ aux);
                  SQL.Add('Where Prod_Codigo = '+ frm_Venda.GRID_Carrinho.Cells[0,I]);
-                 ShowMessage(SQL.Text);
                  ExecSQL;
                  Unit_Persistencia.Commit;
                End;
     End;
 end;
 
-procedure Limpa_Carrinho;
+procedure Tfrm_Venda.Limpa_Carrinho;
 begin
   frm_Venda.GRID_Carrinho.RowCount := 2;
   frm_Venda.GRID_Carrinho.Cells[0,1] := '';
@@ -114,7 +115,7 @@ begin
                                   'Confirmar venda a vista',
                                   MB_ICONQUESTION + MB_YESNO) = mrYes
          then begin
-              ShowMessage('Lançar no caixa o valor de '+ frm_Venda.GRID_Carrinho.Cells[5, frm_Venda.GRID_Carrinho.RowCount - 1]);
+              frm_Caixa.Insere_Caixa('Venda', frm_Venda.GRID_Carrinho.Cells[5, frm_Venda.GRID_Carrinho.RowCount - 1], -1);
               DiminuiEstoque;
               ShowMessage('Venda realizada.');
               limpa_Carrinho;

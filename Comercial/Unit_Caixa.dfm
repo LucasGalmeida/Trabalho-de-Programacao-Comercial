@@ -107,5 +107,6 @@ object frm_Caixa: Tfrm_Caixa
     Align = alLeft
     RowCount = 2
     TabOrder = 1
+    ExplicitLeft = -7
   end
 end

@@ -26,8 +26,6 @@ object frm_SelecaoDeClientes: Tfrm_SelecaoDeClientes
     TabOrder = 0
     OnDblClick = Grid_ClientesDblClick
     OnSelectCell = Grid_ClientesSelectCell
-    ExplicitWidth = 1000
-    ExplicitHeight = 600
   end
   object cli_Panel1: TPanel
     Left = 0
@@ -43,8 +41,6 @@ object frm_SelecaoDeClientes: Tfrm_SelecaoDeClientes
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
-    ExplicitTop = 600
-    ExplicitWidth = 1000
     object cli_ComboBox: TLabel
       Left = 8
       Top = 6

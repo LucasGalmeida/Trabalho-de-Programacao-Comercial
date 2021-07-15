@@ -157,17 +157,15 @@ begin
         Total := FloatToStr(StrToFloat(Total) + StrToFloat(GRID_Caixa.Cells[2,I]));
      end;
      cai_ValorDisponivel.Text := Total;
-     Popula_Grid('');
    end;
 end;
 
 procedure Tfrm_Caixa.FormShow(Sender: TObject);
 begin
    Pinta_Grid;
+   Calcula_Valor_Disponivel;
    Popula_Grid('');
    Calcula_Valor_Total;
-   Calcula_Valor_Disponivel;
-
 end;
 
 end.

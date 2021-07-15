@@ -36,7 +36,7 @@ var
 
 implementation
 
-uses Unit_Venda;
+uses Unit_Venda, Unit_Compra;
 
 Procedure Tfrm_SelecaoDeProdutos.Popula_Grid(Condicao : String);
 Var
@@ -157,18 +157,19 @@ begin
          ShowMessage('Quantidade não pode ser igual a 0.');
        end
   else begin
+
+    aux1 := StrToFloat(Temp.Prod_PrecoVenda);
+    aux2 := StrToInt(Qtd);
+
+    // GRID VENDA
+
     frm_Venda.GRID_Carrinho.RowCount := frm_Venda.GRID_Carrinho.RowCount + 1;
     frm_Venda.GRID_Carrinho.Cells[0, frm_Venda.GRID_Carrinho.RowCount - 2] := IntToStr(Temp.Prod_Codigo);
     frm_Venda.GRID_Carrinho.Cells[1, frm_Venda.GRID_Carrinho.RowCount - 2] := Temp.Prod_Descricao;
     frm_Venda.GRID_Carrinho.Cells[2, frm_Venda.GRID_Carrinho.RowCount - 2] := Qtd;
     frm_Venda.GRID_Carrinho.Cells[3, frm_Venda.GRID_Carrinho.RowCount - 2] := IntToStr(Temp.Prod_Estoque);
     frm_Venda.GRID_Carrinho.Cells[4, frm_Venda.GRID_Carrinho.RowCount - 2] := Temp.Prod_PrecoVenda;
-
-    aux1 := StrToFloat(Temp.Prod_PrecoVenda);
-    aux2 := StrToInt(Qtd);
-
     frm_Venda.GRID_Carrinho.Cells[5, frm_Venda.GRID_Carrinho.RowCount - 2] := FloatToStr(aux1 * aux2);
-
     frm_Venda.GRID_Carrinho.Cells[4, frm_Venda.GRID_Carrinho.RowCount - 1] := 'Total da Compra:';
     frm_Venda.GRID_Carrinho.Cells[5, frm_Venda.GRID_Carrinho.RowCount - 1] := Preco_Total;
 
