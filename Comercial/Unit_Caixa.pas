@@ -16,6 +16,7 @@ type
     cai_Lancamento: TBitBtn;
     cai_ValorTotal: TLabeledEdit;
     cai_ValorDisponivel: TLabeledEdit;
+    btn_Debug: TBitBtn;
     procedure cai_FecharClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     Procedure Pinta_Grid;
@@ -24,6 +25,10 @@ type
     Procedure Calcula_Valor_Disponivel;
     procedure cai_LancamentoClick(Sender: TObject);
     procedure Insere_Caixa(Descricao: String; Valor: String; CodigoNota: Integer);
+    procedure btn_DebugClick(Sender: TObject);
+    procedure GRID_CaixaSelectCell(Sender: TObject; ACol, ARow: Integer;
+      var CanSelect: Boolean);
+    procedure GRID_CaixaDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,10 +37,35 @@ type
 
 var
   frm_Caixa: Tfrm_Caixa;
+  Linha : Integer;
 
 implementation
 
 {$R *.dfm}
+
+uses Unit_DM, Unit_NotaVenda;
+
+procedure Tfrm_Caixa.btn_DebugClick(Sender: TObject);
+begin
+With DM.qryNotaVenda Do
+     Begin
+       Close;
+       SQL.Clear;
+       SQL.Add('Delete From NotaVenda');
+       ExecSQL;
+       Unit_Persistencia.Commit;
+     End;
+With DM.qryCaixa Do
+     Begin
+       Close;
+       SQL.Clear;
+       SQL.Add('Delete From Caixa');
+       ExecSQL;
+       Unit_Persistencia.Commit;
+     End;
+
+Popula_Grid('');
+end;
 
 procedure Tfrm_Caixa.cai_FecharClick(Sender: TObject);
 begin
@@ -166,6 +196,24 @@ begin
    Calcula_Valor_Disponivel;
    Popula_Grid('');
    Calcula_Valor_Total;
+end;
+
+procedure Tfrm_Caixa.GRID_CaixaDblClick(Sender: TObject);
+begin
+  if GRID_Caixa.Cells[1,Linha] = 'Venda' then
+  begin
+    Application.CreateForm(Tfrm_NotaVenda, frm_NotaVenda);
+    frm_NotaVenda.pegaCodigoNota(GRID_Caixa.Cells[4,Linha]);
+    frm_NotaVenda.ShowModal;
+    frm_NotaVenda.Destroy;
+  end;
+
+end;
+
+procedure Tfrm_Caixa.GRID_CaixaSelectCell(Sender: TObject; ACol, ARow: Integer;
+  var CanSelect: Boolean);
+begin
+  Linha := ARow;
 end;
 
 end.

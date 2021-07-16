@@ -17,7 +17,8 @@ uses
   Unit_ContasReceber in 'Unit_ContasReceber.pas' {frm_ContasReceber},
   Unit_ContasPagar in 'Unit_ContasPagar.pas' {frm_ContasPagar},
   Unit_Compra in 'Unit_Compra.pas' {frm_Compra},
-  Unit_SelecaoDeProdutosFornecedor in 'Unit_SelecaoDeProdutosFornecedor.pas' {frm_SelecaoDeProdutosFornecedor};
+  Unit_SelecaoDeProdutosFornecedor in 'Unit_SelecaoDeProdutosFornecedor.pas' {frm_SelecaoDeProdutosFornecedor},
+  Unit_NotaVenda in 'Unit_NotaVenda.pas' {frm_NotaVenda};
 
 {$R *.res}
 
@@ -35,5 +36,6 @@ begin
   Application.CreateForm(Tfrm_ContasReceber, frm_ContasReceber);
   Application.CreateForm(Tfrm_ContasPagar, frm_ContasPagar);
   Application.CreateForm(Tfrm_Compra, frm_Compra);
+  Application.CreateForm(Tfrm_NotaVenda, frm_NotaVenda);
   Application.Run;
 end.

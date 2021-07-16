@@ -152,11 +152,16 @@ begin
 end;
 
 Procedure Tfrm_SelecaoDeClientes.Grid_ClientesDblClick(Sender: TObject);
-var Temp : Dados_Cliente;
-var Entrada : String;
-var QtdParcelas : String;
-var ValorAPagar : String;
-var I : Integer;
+var
+Temp : Dados_Cliente;
+Entrada : String;
+QtdParcelas : String;
+ValorAPagar : String;
+I, J : Integer;
+Temp2 : Dados_NotaVenda;
+aux : String;
+Data : TDateTime;
+
 begin
     Temp := Retorna_Dados_Cliente(StrToInt(Grid_Clientes.Cells[0,Linha]));
     Entrada := InputBox('Digite o valor de entrada','Digite a entrada', '0');
@@ -174,12 +179,40 @@ begin
     else begin
       For I := 0 To StrToInt(QtdParcelas)-1 Do
       begin
-        frm_ContasReceber.Insere_ContaReceber(
-            Temp.Cli_Codigo,
-            'Parcela '+ IntToStr(I+1)+'/'+ QtdParcelas,
-            FloatToStr(StrToFloat(ValorAPagar)/StrToInt(QtdParcelas)),
-            -1
-            );
+
+          aux := '';
+          Temp2.Nv_ProdutosVendidos := '';
+
+          // Gera nota
+          Temp2.Nv_Codigo := StrToInt(Retorna_Proximo_Codigo_NotaVenda);
+          Temp2.Nv_CodigoCliente := Temp.Cli_Codigo;
+
+          for J := 1 to frm_Venda.GRID_Carrinho.RowCount-2 do
+          begin
+             aux := (
+                      frm_Venda.GRID_Carrinho.Cells[0, J]+':'+frm_Venda.GRID_Carrinho.Cells[1, J]+':'+
+                      frm_Venda.GRID_Carrinho.Cells[2, J]+':'+frm_Venda.GRID_Carrinho.Cells[4, J]+':'+
+                      frm_Venda.GRID_Carrinho.Cells[5, J]+'\n'
+                     );
+             Temp2.Nv_ProdutosVendidos := Temp2.Nv_ProdutosVendidos + aux;
+          end;
+
+          // Gera data
+          Data := StrToDateTime(FormatDateTime('dd/mm/yyyy', Now));
+          for J := 0 to I+1 do
+              Data := IncMonth(Data);
+          Temp2.Nv_Data := DateToStr(Data);
+
+
+          Temp2.Nv_ValorTotal := FloatToStr(StrToFloat(ValorAPagar)/StrToInt(QtdParcelas));
+          Grava_Dados_NotaVenda(Temp2);
+
+          frm_ContasReceber.Insere_ContaReceber(
+              Temp.Cli_Codigo,
+              'Parcela '+ IntToStr(I+1)+'/'+ QtdParcelas,
+              FloatToStr(StrToFloat(ValorAPagar)/StrToInt(QtdParcelas)),
+              Temp2.Nv_Codigo
+              );
       end;
       frm_Venda.DiminuiEstoque;
       ShowMessage('Venda realizada.');

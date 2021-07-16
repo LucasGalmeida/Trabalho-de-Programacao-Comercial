@@ -38,7 +38,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_Caixa;
+uses Unit_Caixa, Unit_NotaVenda;
 
 procedure Tfrm_Venda.btn_addClick(Sender: TObject);
 begin
@@ -105,6 +105,10 @@ begin
 end;
 
 procedure Tfrm_Venda.btn_VistaClick(Sender: TObject);
+var
+Temp : Dados_NotaVenda;
+I : Integer;
+aux : String;
 begin
    if GRID_Carrinho.RowCount = 2
    then begin
@@ -115,7 +119,26 @@ begin
                                   'Confirmar venda a vista',
                                   MB_ICONQUESTION + MB_YESNO) = mrYes
          then begin
-              frm_Caixa.Insere_Caixa('Venda', frm_Venda.GRID_Carrinho.Cells[5, frm_Venda.GRID_Carrinho.RowCount - 1], -1);
+              // Gera nota
+              Temp.Nv_Codigo := StrToInt(Retorna_Proximo_Codigo_NotaVenda);
+              Temp.Nv_CodigoCliente := -1;
+
+              for I := 1 to frm_Venda.GRID_Carrinho.RowCount-2 do
+              begin
+                 aux := (
+                          frm_Venda.GRID_Carrinho.Cells[0, I]+':'+frm_Venda.GRID_Carrinho.Cells[1, I]+':'+
+                          frm_Venda.GRID_Carrinho.Cells[2, I]+':'+frm_Venda.GRID_Carrinho.Cells[4, I]+':'+
+                          frm_Venda.GRID_Carrinho.Cells[5, I]+'\n'
+                         );
+                 Temp.Nv_ProdutosVendidos := Temp.Nv_ProdutosVendidos + aux;
+              end;
+
+              Temp.Nv_Data := FormatDateTime('dd.mm.yyyy hh:MM:ss', Now);
+              Temp.Nv_ValorTotal := frm_Venda.GRID_Carrinho.Cells[5, frm_Venda.GRID_Carrinho.RowCount - 1];
+
+              Grava_Dados_NotaVenda(Temp);
+
+              frm_Caixa.Insere_Caixa('Venda', frm_Venda.GRID_Carrinho.Cells[5, frm_Venda.GRID_Carrinho.RowCount - 1], Temp.Nv_Codigo);
               DiminuiEstoque;
               ShowMessage('Venda realizada.');
               limpa_Carrinho;

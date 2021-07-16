@@ -28,8 +28,6 @@ object frm_ContasReceber: Tfrm_ContasReceber
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitTop = 600
-    ExplicitWidth = 1000
     object cr_ComboBox: TLabel
       Left = 8
       Top = 6
@@ -73,20 +71,29 @@ object frm_ContasReceber: Tfrm_ContasReceber
     object cr_Pesquisa: TMaskEdit
       Left = 232
       Top = 37
-      Width = 561
+      Width = 401
       Height = 33
       Enabled = False
       TabOrder = 2
       Text = ''
     end
     object btn_debug: TBitBtn
-      Left = 608
+      Left = 448
       Top = 6
       Width = 123
       Height = 25
       Caption = 'btn_debug'
       TabOrder = 3
       OnClick = btn_debugClick
+    end
+    object btn_Receber: TBitBtn
+      Left = 656
+      Top = 21
+      Width = 140
+      Height = 50
+      Caption = 'Receber'
+      TabOrder = 4
+      OnClick = btn_ReceberClick
     end
   end
   object GRID_ContasReceber: TStringGrid
@@ -98,5 +105,7 @@ object frm_ContasReceber: Tfrm_ContasReceber
     ColCount = 6
     RowCount = 2
     TabOrder = 1
+    OnDblClick = GRID_ContasReceberDblClick
+    OnSelectCell = GRID_ContasReceberSelectCell
   end
 end

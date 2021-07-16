@@ -98,6 +98,15 @@ object frm_Caixa: Tfrm_Caixa
       TabOrder = 3
       Text = '0'
     end
+    object btn_Debug: TBitBtn
+      Left = 168
+      Top = 520
+      Width = 75
+      Height = 25
+      Caption = 'Debug'
+      TabOrder = 4
+      OnClick = btn_DebugClick
+    end
   end
   object GRID_Caixa: TStringGrid
     Left = 0
@@ -107,6 +116,7 @@ object frm_Caixa: Tfrm_Caixa
     Align = alLeft
     RowCount = 2
     TabOrder = 1
-    ExplicitLeft = -7
+    OnDblClick = GRID_CaixaDblClick
+    OnSelectCell = GRID_CaixaSelectCell
   end
 end

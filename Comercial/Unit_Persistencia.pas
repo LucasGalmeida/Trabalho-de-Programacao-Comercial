@@ -999,19 +999,81 @@ End;
 // Funcoes Nota Fiscal
 Function Retorna_Proximo_Codigo_NotaVenda : String;
 begin
-
+  With DM.qryAux Do
+      Begin
+        SQL.Clear;
+        SQL.Add('Select First 1 Nv_Codigo');
+        SQL.Add('From NotaVenda');
+        SQL.Add('Order By Nv_Codigo Desc');
+        Open;
+        FetchAll;
+        if ((DM.qryAux.RecordCount > 0) And (DM.qryAux['Nv_Codigo'] <> Null))
+          then Begin
+                 Result := IntToStr(DM.qryAux['Nv_Codigo'] + 1);
+               End
+          Else Begin
+                 Result := '1';
+               End;
+      End;
 end;
 Function Retorna_NotasVenda(Condicao:String) : Notas_Venda;
 begin
 
 end;
 Function Retorna_NotaVenda(Codigo:Integer): Dados_NotaVenda;
-begin
+Var
+  I : Integer;
+Begin
+  With DM.qryNotaVenda Do
+     Begin
+       Close;
+       SQL.Clear;
+       SQL.Add('Select * From NotaVenda');
+       SQL.Add('Where Nv_Codigo = '+IntToStr(Codigo));
+//       ExecSQL;
+       Open;
+       FetchAll; //garante que todos os resultados vieram pra memória
+       First;
+       if DM.qryNotaVenda.RecordCount > 0
+         then Begin
+                for I := 1 to DM.qryNotaVenda.RecordCount Do
+                Begin
+                  if DM.qryNotaVenda['Nv_Codigo'] <> Null
+                    then Result.Nv_Codigo := DM.qryNotaVenda['Nv_Codigo']
+                    else Result.Nv_Codigo := -1;
+                  if DM.qryNotaVenda['Nv_CodigoCliente'] <> Null
+                    then Result.Nv_CodigoCliente := DM.qryNotaVenda['Nv_CodigoCliente']
+                    else Result.Nv_CodigoCliente := -1;
+                  if DM.qryNotaVenda['Nv_ProdutosVendidos'] <> Null
+                    then Result.Nv_ProdutosVendidos := DM.qryNotaVenda['Nv_ProdutosVendidos']
+                    else Result.Nv_ProdutosVendidos := '';
+                  if DM.qryNotaVenda['Nv_Data'] <> Null
+                    then Result.Nv_Data := DM.qryNotaVenda['Nv_Data']
+                    else Result.Nv_Data := '';
+                  if DM.qryNotaVenda['Nv_ValorTotal'] <> Null
+                    then Result.Nv_ValorTotal := DM.qryNotaVenda['Nv_ValorTotal']
+                    else Result.Nv_ValorTotal := '';
+                  Next;
+                End;
+              End;
+     End;
 
 end;
 Procedure Grava_Dados_NotaVenda(Dados_Form : Dados_NotaVenda);
 begin
-
+ With DM.qryNotaVenda Do
+       Begin
+         Close;
+         SQL.Clear;
+         SQL.Add('Insert Into NotaVenda Values(');
+         SQL.Add(IntToStr(Dados_Form.Nv_Codigo)+',');
+         SQL.Add(IntToStr(Dados_Form.Nv_CodigoCliente)+',');
+         SQL.Add(QuotedStr(Dados_Form.Nv_ProdutosVendidos)+',');
+         SQL.Add(QuotedStr(Dados_Form.Nv_Data)+',');
+         SQL.Add(QuotedStr(Dados_Form.Nv_ValorTotal)+')');
+         ExecSQL;
+         Commit;
+       End;
 end;
 Function Retorna_Proximo_Codigo_NotaCompra : String;
 begin

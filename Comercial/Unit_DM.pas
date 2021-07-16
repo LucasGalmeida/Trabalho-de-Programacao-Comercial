@@ -35,6 +35,9 @@ type
     qryContasPagar: TIBQuery;
     IBTable7: TIBTable;
     DataSource7: TDataSource;
+    qryNotaVenda: TIBQuery;
+    IBTable8: TIBTable;
+    DataSource8: TDataSource;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

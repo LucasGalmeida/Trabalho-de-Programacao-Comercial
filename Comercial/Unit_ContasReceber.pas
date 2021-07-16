@@ -17,12 +17,17 @@ type
     cr_Pesquisa: TMaskEdit;
     GRID_ContasReceber: TStringGrid;
     btn_debug: TBitBtn;
+    btn_Receber: TBitBtn;
     procedure FormShow(Sender: TObject);
     Procedure Pinta_Grid;
     Procedure Popula_Grid(Condicao : String);
     procedure Insere_ContaReceber(CodigoCliente :Integer; Descricao: String; Valor: String; CodigoNota: Integer);
     procedure btn_Fechar1Click(Sender: TObject);
     procedure btn_debugClick(Sender: TObject);
+    procedure GRID_ContasReceberSelectCell(Sender: TObject; ACol, ARow: Integer;
+      var CanSelect: Boolean);
+    procedure GRID_ContasReceberDblClick(Sender: TObject);
+    procedure btn_ReceberClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -32,12 +37,13 @@ type
 
 var
   frm_ContasReceber: Tfrm_ContasReceber;
+  Linha : Integer;
 
 implementation
 
 {$R *.dfm}
 
-uses Unit_DM;
+uses Unit_DM, Unit_NotaVenda, Unit_Caixa;
 
 Procedure Tfrm_ContasReceber.Pinta_Grid;
 begin
@@ -94,10 +100,12 @@ Begin
 End;
 
 procedure Tfrm_ContasReceber.Insere_ContaReceber(CodigoCliente :Integer; Descricao: String; Valor: String; CodigoNota: Integer);
-var Dados_Form : Dados_ContasReceber;
-var I : Integer;
-var parcela : String;
-var Data : TDateTime;
+var
+Dados_Form : Dados_ContasReceber;
+I : Integer;
+parcela : String;
+Data : TDateTime;
+
 begin
   Dados_Form.Cr_Codigo := StrToInt(Retorna_Proximo_Codigo_ContaReceber);
   Dados_Form.Cr_CodigoCliente := CodigoCliente;
@@ -132,10 +140,62 @@ begin
   frm_ContasReceber.Close;
 end;
 
+procedure Tfrm_ContasReceber.btn_ReceberClick(Sender: TObject);
+var
+codigo : String;
+indice: Integer;
+I: Integer;
+
+begin
+  codigo := InputBox('Digite o código da conta a ser recebida.','Digite o código da conta a ser recebida.', '0');
+
+  try
+    indice := 0;
+    for I := 0 to GRID_ContasReceber.RowCount - 1 do
+    begin
+      if GRID_ContasReceber.Cells[0,I] = codigo then
+      begin
+        indice := I;
+      end;
+    end;
+    frm_Caixa.Insere_Caixa('Venda', GRID_ContasReceber.Cells[3, indice], StrToInt(GRID_ContasReceber.Cells[5, indice]));
+    With DM.qryContasReceber Do
+       Begin
+         Close;
+         SQL.Clear;
+         SQL.Add('Delete From ContasReceber');
+         SQL.Add('Where Cr_Codigo =' + codigo);
+         ExecSQL;
+         Unit_Persistencia.Commit;
+       End;
+    Popula_Grid('');
+    ShowMessage('Parcela Paga!');
+  except
+    ShowMessage('Codigo Invalido');
+  end;
+
+end;
+
 procedure Tfrm_ContasReceber.FormShow(Sender: TObject);
 begin
    Pinta_Grid;
    Popula_Grid('');
+end;
+
+procedure Tfrm_ContasReceber.GRID_ContasReceberDblClick(Sender: TObject);
+begin
+
+  Application.CreateForm(Tfrm_NotaVenda, frm_NotaVenda);
+  frm_NotaVenda.pegaCodigoNota(GRID_ContasReceber.Cells[5,Linha]);
+  frm_NotaVenda.ShowModal;
+  frm_NotaVenda.Destroy;
+
+end;
+
+procedure Tfrm_ContasReceber.GRID_ContasReceberSelectCell(Sender: TObject; ACol,
+  ARow: Integer; var CanSelect: Boolean);
+begin
+  Linha := Arow;
 end;
 
 end.
