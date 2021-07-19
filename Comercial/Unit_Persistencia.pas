@@ -148,6 +148,8 @@ Type
                       Nc_ProdutosComprados : String;
                       Nc_Data : String;
                       Nc_ValorTotal: String;
+                      Nc_Frete : String;
+                      Nc_Imposto : String;
                     End;
         Notas_Compra = Array of Dados_NotaCompra;
 Function Retorna_Proximo_Codigo_NotaCompra : String;
@@ -1077,19 +1079,90 @@ begin
 end;
 Function Retorna_Proximo_Codigo_NotaCompra : String;
 begin
-
+     With DM.qryAux Do
+        Begin
+          SQL.Clear;
+          SQL.Add('Select First 1 Nc_Codigo');
+          SQL.Add('From NotaCompra');
+          SQL.Add('Order By Nc_Codigo Desc');
+          Open;
+          FetchAll;
+          if ((DM.qryAux.RecordCount > 0) And (DM.qryAux['Nc_Codigo'] <> Null))
+            then Begin
+                   Result := IntToStr(DM.qryAux['Nc_Codigo'] + 1);
+                 End
+            Else Begin
+                   Result := '1';
+                 End;
+        End;
 end;
 Function Retorna_NotasCompra(Condicao:String) : Notas_Compra;
 begin
 
 end;
 Function Retorna_NotaCompra(Codigo:Integer): Dados_NotaCompra;
+Var
+  I : Integer;
 begin
+
+  With DM.qryNotaCompra Do
+     Begin
+       Close;
+       SQL.Clear;
+       SQL.Add('Select * From NotaCompra');
+       SQL.Add('Where Nc_Codigo = '+IntToStr(Codigo));
+//       ExecSQL;
+       Open;
+       FetchAll; //garante que todos os resultados vieram pra memória
+       First;
+       if DM.qryNotaCompra.RecordCount > 0
+         then Begin
+                for I := 1 to DM.qryNotaCompra.RecordCount Do
+                Begin
+                  if DM.qryNotaCompra['Nc_Codigo'] <> Null
+                    then Result.Nc_Codigo := DM.qryNotaCompra['Nc_Codigo']
+                    else Result.Nc_Codigo := -1;
+                  if DM.qryNotaCompra['Nc_CodigoFornecedor'] <> Null
+                    then Result.Nc_CodigoFornecedor := DM.qryNotaCompra['Nc_CodigoFornecedor']
+                    else Result.Nc_CodigoFornecedor := -1;
+                  if DM.qryNotaCompra['Nc_ProdutosComprados'] <> Null
+                    then Result.Nc_ProdutosComprados := DM.qryNotaCompra['Nc_ProdutosComprados']
+                    else Result.Nc_ProdutosComprados := '';
+                  if DM.qryNotaCompra['Nc_Data'] <> Null
+                    then Result.Nc_Data := DM.qryNotaCompra['Nc_Data']
+                    else Result.Nc_Data := '';
+                  if DM.qryNotaCompra['Nc_ValorTotal'] <> Null
+                    then Result.Nc_ValorTotal := DM.qryNotaCompra['Nc_ValorTotal']
+                    else Result.Nc_ValorTotal := '';
+                  if DM.qryNotaCompra['Nc_Frete'] <> Null
+                    then Result.Nc_Frete := DM.qryNotaCompra['Nc_Frete']
+                    else Result.Nc_Frete := '';
+                  if DM.qryNotaCompra['Nc_Imposto'] <> Null
+                    then Result.Nc_Imposto := DM.qryNotaCompra['Nc_Imposto']
+                    else Result.Nc_Imposto := '';
+                  Next;
+                End;
+              End;
+     End;
 
 end;
 Procedure Grava_Dados_NotaCompra(Dados_Form : Dados_NotaCompra);
 begin
-
+  With DM.qryNotaCompra Do
+       Begin
+         Close;
+         SQL.Clear;
+         SQL.Add('Insert Into NotaCompra Values(');
+         SQL.Add(IntToStr(Dados_Form.Nc_Codigo)+',');
+         SQL.Add(IntToStr(Dados_Form.Nc_CodigoFornecedor)+',');
+         SQL.Add(QuotedStr(Dados_Form.Nc_ProdutosComprados)+',');
+         SQL.Add(QuotedStr(Dados_Form.Nc_Data)+',');
+         SQL.Add(QuotedStr(Dados_Form.Nc_ValorTotal)+',');
+         SQL.Add(QuotedStr(Dados_Form.Nc_Frete)+',');
+         SQL.Add(QuotedStr(Dados_Form.Nc_Imposto)+')');
+         ExecSQL;
+         Commit;
+       End;
 end;
 
 end.

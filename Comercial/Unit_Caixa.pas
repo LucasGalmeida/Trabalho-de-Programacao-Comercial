@@ -43,7 +43,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_DM, Unit_NotaVenda;
+uses Unit_DM, Unit_NotaVenda, Unit_NotaCompra;
 
 procedure Tfrm_Caixa.btn_DebugClick(Sender: TObject);
 begin
@@ -206,7 +206,15 @@ begin
     frm_NotaVenda.pegaCodigoNota(GRID_Caixa.Cells[4,Linha]);
     frm_NotaVenda.ShowModal;
     frm_NotaVenda.Destroy;
+  end
+  else if GRID_Caixa.Cells[1,Linha] = 'Compra' then
+  begin
+    Application.CreateForm(Tfrm_NotaCompra, frm_NotaCompra);
+    frm_NotaCompra.pegaCodigoNota(GRID_Caixa.Cells[4,Linha]);
+    frm_NotaCompra.ShowModal;
+    frm_NotaCompra.Destroy;
   end;
+
 
 end;
 

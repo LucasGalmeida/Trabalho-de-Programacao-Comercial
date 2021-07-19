@@ -18,7 +18,9 @@ uses
   Unit_ContasPagar in 'Unit_ContasPagar.pas' {frm_ContasPagar},
   Unit_Compra in 'Unit_Compra.pas' {frm_Compra},
   Unit_SelecaoDeProdutosFornecedor in 'Unit_SelecaoDeProdutosFornecedor.pas' {frm_SelecaoDeProdutosFornecedor},
-  Unit_NotaVenda in 'Unit_NotaVenda.pas' {frm_NotaVenda};
+  Unit_NotaVenda in 'Unit_NotaVenda.pas' {frm_NotaVenda},
+  Unit_NotaCompra in 'Unit_NotaCompra.pas' {frm_NotaCompra},
+  Unit_SelecaoDeFornecedores in 'Unit_SelecaoDeFornecedores.pas' {frm_SelecaoDeFornecedores};
 
 {$R *.res}
 
@@ -27,15 +29,20 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TSuperMercadoDEF, SuperMercadoDEF);
   Application.CreateForm(TDM, DM);
+  Application.CreateForm(Tfrm_Supermercado, frm_Supermercado);
+  Application.CreateForm(Tfrm_Caixa, frm_Caixa);
+  Application.CreateForm(Tfrm_Clientes, frm_Clientes);
   Application.CreateForm(Tfrm_Produtos, frm_Produtos);
   Application.CreateForm(Tfrm_Fornecedores, frm_Fornecedores);
   Application.CreateForm(Tfrm_Venda, frm_Venda);
   Application.CreateForm(Tfrm_SelecaoDeProdutos, frm_SelecaoDeProdutos);
   Application.CreateForm(Tfrm_SelecaoDeClientes, frm_SelecaoDeClientes);
-  Application.CreateForm(Tfrm_Caixa, frm_Caixa);
+  Application.CreateForm(Tfrm_SelecaoDeProdutosFornecedor, frm_SelecaoDeProdutosFornecedor);
+  Application.CreateForm(Tfrm_SelecaoDeFornecedores, frm_SelecaoDeFornecedores);
   Application.CreateForm(Tfrm_ContasReceber, frm_ContasReceber);
   Application.CreateForm(Tfrm_ContasPagar, frm_ContasPagar);
   Application.CreateForm(Tfrm_Compra, frm_Compra);
   Application.CreateForm(Tfrm_NotaVenda, frm_NotaVenda);
+  Application.CreateForm(Tfrm_NotaCompra, frm_NotaCompra);
   Application.Run;
 end.

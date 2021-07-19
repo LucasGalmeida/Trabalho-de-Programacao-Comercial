@@ -1,0 +1,24 @@
+unit Unit_NotaCompra;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  Tfrm_NotaCompra = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_NotaCompra: Tfrm_NotaCompra;
+
+implementation
+
+{$R *.dfm}
+
+end.

@@ -17,12 +17,17 @@ type
     cp_Pesquisa: TMaskEdit;
     btn_debug: TBitBtn;
     GRID_ContasPagar: TStringGrid;
+    btn_Pagar: TBitBtn;
     procedure FormShow(Sender: TObject);
     procedure Pinta_Grid;
     procedure Popula_Grid(Condicao : String);
     procedure btn_debugClick(Sender: TObject);
     procedure btn_Fechar1Click(Sender: TObject);
     procedure Insere_ContaPagar(CodigoFornecedor :Integer; Descricao: String; Valor: String; CodigoNota: Integer);
+    procedure GRID_ContasPagarDblClick(Sender: TObject);
+    procedure btn_PagarClick(Sender: TObject);
+    procedure GRID_ContasPagarSelectCell(Sender: TObject; ACol, ARow: Integer;
+      var CanSelect: Boolean);
   private
     { Private declarations }
   public
@@ -31,10 +36,13 @@ type
 
 var
   frm_ContasPagar: Tfrm_ContasPagar;
+  Linha : Integer;
 
 implementation
 
 {$R *.dfm}
+
+uses Unit_NotaCompra, Unit_Caixa;
 
 Procedure Tfrm_ContasPagar.Pinta_Grid;
 begin
@@ -125,6 +133,64 @@ end;
 procedure Tfrm_ContasPagar.btn_Fechar1Click(Sender: TObject);
 begin
   frm_ContasPagar.Close;
+end;
+
+procedure GRID_ContasPagarSelectCell(Sender: TObject; ACol, ARow: Integer;
+      var CanSelect: Boolean);
+begin
+  Linha := Arow;
+end;
+
+procedure Tfrm_ContasPagar.GRID_ContasPagarDblClick(Sender: TObject);
+begin
+
+  Application.CreateForm(Tfrm_NotaCompra, frm_NotaCompra);
+  frm_NotaCompra.pegaCodigoNota(GRID_ContasPagar.Cells[5,Linha]);
+  frm_NotaCompra.ShowModal;
+  frm_NotaCompra.Destroy;
+
+end;
+
+procedure Tfrm_ContasPagar.GRID_ContasPagarSelectCell(Sender: TObject; ACol,
+  ARow: Integer; var CanSelect: Boolean);
+begin
+  Linha := ARow;
+end;
+
+procedure Tfrm_ContasPagar.btn_PagarClick(Sender: TObject);
+var
+codigo : String;
+indice: Integer;
+I: Integer;
+
+begin
+  codigo := InputBox('Digite o código da conta a ser paga.','Digite o código da conta a ser paga.', '0');
+
+  try
+    indice := 0;
+    for I := 0 to GRID_ContasPagar.RowCount - 1 do
+    begin
+      if GRID_ContasPagar.Cells[0,I] = codigo then
+      begin
+        indice := I;
+      end;
+    end;
+    frm_Caixa.Insere_Caixa('Compra', GRID_ContasPagar.Cells[3, indice], StrToInt(GRID_ContasPagar.Cells[5, indice]));
+    With DM.qryContasPagar Do
+       Begin
+         Close;
+         SQL.Clear;
+         SQL.Add('Delete From ContasPagar');
+         SQL.Add('Where Cp_Codigo =' + codigo);
+         ExecSQL;
+         Unit_Persistencia.Commit;
+       End;
+    Popula_Grid('');
+    ShowMessage('Parcela Paga!');
+  except
+    ShowMessage('Codigo Invalido');
+  end;
+
 end;
 
 procedure Tfrm_ContasPagar.FormShow(Sender: TObject);

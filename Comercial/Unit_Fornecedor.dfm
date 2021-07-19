@@ -62,7 +62,7 @@
           64
           64)
       end
-      object cli_Panel1: TPanel
+      object for_Panel1: TPanel
         Left = 0
         Top = 600
         Width = 1000
@@ -132,6 +132,10 @@
     object CRUD_Fornecedor: TTabSheet
       Caption = 'Cadastro/Edi'#231#227'o'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object label_CNPJ: TLabel
         Left = 174
         Top = 322

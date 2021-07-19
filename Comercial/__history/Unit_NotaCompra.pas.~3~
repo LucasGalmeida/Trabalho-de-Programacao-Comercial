@@ -1,0 +1,43 @@
+unit Unit_NotaCompra;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask,
+  Vcl.Buttons, Vcl.Grids, Vcl.ComCtrls;
+
+type
+  Tfrm_NotaCompra = class(TForm)
+    ControlePaginasNotaCompra: TPageControl;
+    Visualização: TTabSheet;
+    Grid_NotasCompra: TStringGrid;
+    nv_Panel1: TPanel;
+    nc_ComboBox: TLabel;
+    label_Pesquisa: TLabel;
+    btn_Fechar1: TBitBtn;
+    cbx_PesquisaNota: TComboBox;
+    nc_Pesquisa: TMaskEdit;
+    NotaCompra: TTabSheet;
+    nc_Panel2: TPanel;
+    btn_Fechar: TBitBtn;
+    btn_Imprimir: TBitBtn;
+    nv_Codigo: TLabeledEdit;
+    nc_CodigoFornecedor: TLabeledEdit;
+    nc_Data: TLabeledEdit;
+    GRID_ProdutosNotaCompra: TStringGrid;
+    nc_ValorTotal: TLabeledEdit;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_NotaCompra: Tfrm_NotaCompra;
+
+implementation
+
+{$R *.dfm}
+
+end.

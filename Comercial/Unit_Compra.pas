@@ -23,6 +23,7 @@ type
     procedure Pinta_Grid;
     procedure btn_VistaClick(Sender: TObject);
     procedure btn_PrazoClick(Sender: TObject);
+    procedure AtualizaEstoque(frete, imposto : String);
   private
     { Private declarations }
   public
@@ -36,7 +37,8 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_SelecaoDeProdutosFornecedor, Unit_Caixa;
+uses Unit_SelecaoDeProdutosFornecedor, Unit_Caixa, Unit_Persistencia, Unit_DM,
+  Unit_Principal, Unit_SelecaoDeFornecedores;
 
 procedure Tfrm_Compra.btn_addClick(Sender: TObject);
 begin
@@ -77,6 +79,47 @@ begin
   frm_Compra.GRID_Carrinho.Cells[5,1] := '';
 end;
 
+procedure Tfrm_Compra.AtualizaEstoque(frete, imposto : String);
+var
+I : Integer;
+Temp : Dados_Produto;
+aux, aux2 : String;
+begin
+  aux := '';
+  aux2 := '';
+  for I := 1 to frm_Compra.GRID_Carrinho.RowCount-2 do
+  begin
+     Temp := Retorna_Dados_Produto(StrToInt(frm_Compra.GRID_Carrinho.Cells[0,I]));
+     With DM.qryProduto Do
+     Begin
+       Close;
+       SQL.Clear;
+       SQL.Add('Update Produto Set');
+
+       aux := FloatToStr(
+                          StrToFloat(Temp.Prod_PrecoCusto) +
+                          StrToFloat(frete) +
+                          StrToFloat(imposto)
+                        );
+       aux := FloatToStr(
+                          StrToFloat(aux)
+                          /
+                          StrToFloat(SuperMercadoDEF.label_lucro.Caption)
+                        );
+
+       SQL.Add('Prod_PrecoVenda = ' + QuotedStr(aux) + ',');
+
+       aux2 := IntToStr(Temp.Prod_Estoque + StrToInt(frm_Compra.GRID_Carrinho.Cells[2,I]));
+
+       SQL.Add('Prod_Estoque = ' + QuotedStr(aux2));
+       SQL.Add('Where Prod_Codigo = '+ QuotedStr(frm_Compra.GRID_Carrinho.Cells[0,I]));
+       ShowMessage(SQL.Text);
+       ExecSQL;
+       Commit;
+     End;
+  end;
+end;
+
 procedure Tfrm_Compra.btn_PrazoClick(Sender: TObject);
 begin
    if GRID_Carrinho.RowCount = 2
@@ -88,21 +131,16 @@ begin
                             'Confirmar compra a prazo',
                             MB_ICONQUESTION + MB_YESNO) = mrYes
      then begin
-            // Fazer uma Unit pra selecionar fornecedor
-            // Pedir entrada + qtd parcelas
-            // Lançar N notas fiscais
-            // Atualizar produtos + caixa
-            // Limpar carrinho
-            //Application.CreateForm(Tfrm_SelecaoDeFornecedores, frm_SelecaoDeFornecedores);
-            //frm_SelecaoDeFornecedores.ShowModal;
-            //frm_SelecaoDeFornecedores.Destroy;
+            Application.CreateForm(Tfrm_SelecaoDeFornecedores, frm_SelecaoDeFornecedores);
+            frm_SelecaoDeFornecedores.SetCompraPrazo;
+            frm_SelecaoDeFornecedores.ShowModal;
+            frm_SelecaoDeFornecedores.Destroy;
           end;
    end;
 
 end;
 
 procedure Tfrm_Compra.btn_VistaClick(Sender: TObject);
-var valor : String;
 begin
    if GRID_Carrinho.RowCount = 2
    then begin
@@ -113,15 +151,12 @@ begin
                                   'Confirmar compra a vista',
                                   MB_ICONQUESTION + MB_YESNO) = mrYes
          then begin
-              valor := frm_Compra.GRID_Carrinho.Cells[5, frm_Compra.GRID_Carrinho.RowCount - 1];
-              if StrToFloat(frm_Caixa.cai_ValorTotal.Text) >= StrToFloat(valor)
-              then begin
-                    // Se tiver, gera a nota, compra, e atualiza estoque
-                    //frm_Compra.Insere_Caixa('Compra', valor total, Codigo nota);
-                    //AtualizaEstoque;
-                    ShowMessage('Compra realizada.');
-                    limpa_Carrinho;
-                    end;
+
+                Application.CreateForm(Tfrm_SelecaoDeFornecedores, frm_SelecaoDeFornecedores);
+                frm_SelecaoDeFornecedores.SetCompraVista;
+                frm_SelecaoDeFornecedores.ShowModal;
+                frm_SelecaoDeFornecedores.Destroy;
+
                end;
    end
 end;

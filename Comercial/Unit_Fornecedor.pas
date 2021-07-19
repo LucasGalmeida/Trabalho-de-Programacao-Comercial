@@ -12,7 +12,7 @@ type
     ControlePaginasFornecedor: TPageControl;
     Visualização: TTabSheet;
     Grid_Fornecedores: TStringGrid;
-    cli_Panel1: TPanel;
+    for_Panel1: TPanel;
     for_ComboBox: TLabel;
     label_Pesquisa: TLabel;
     btn_Fechar1: TBitBtn;
@@ -223,43 +223,6 @@ begin
   Result := True;
 end;
 
-Procedure Tfrm_Fornecedores.Popula_Grid(Condicao : String);
-Var
-  Fornecedores_Atuais : Fornecedores_Cadastrados;
-  I : Integer;
-Begin
-  SetLength(Fornecedores_Atuais,0);
-  Grid_Fornecedores.RowCount := 2;
-  Grid_Fornecedores.Cells[0,1] := '';
-  Grid_Fornecedores.Cells[1,1] := '';
-  Grid_Fornecedores.Cells[2,1] := '';
-  Grid_Fornecedores.Cells[3,1] := '';
-  Grid_Fornecedores.Cells[4,1] := '';
-  Grid_Fornecedores.Cells[5,1] := '';
-  Grid_Fornecedores.Cells[6,1] := '';
-
-  Fornecedores_Atuais := Retorna_Fornecedores_Cadastrados(Condicao);
-  if Length(Fornecedores_Atuais) = 0
-    then Begin
-           PopupEditarFornecedor.Enabled := False;
-           Exit;
-         End;
-  PopupEditarFornecedor.Enabled := True;
-  For I := 0 To Length(Fornecedores_Atuais)-1 Do
-    Begin
-      Grid_Fornecedores.RowCount := Grid_Fornecedores.RowCount + 1;
-      Grid_Fornecedores.Cells[0,I+1] := IntToStr(Fornecedores_Atuais[I].For_Codigo);
-      Grid_Fornecedores.Cells[1,I+1] := Fornecedores_Atuais[I].For_NomeFantasia;
-      Grid_Fornecedores.Cells[2,I+1] := Fornecedores_Atuais[I].For_RazaoSocial;
-      Grid_Fornecedores.Cells[3,I+1] := Fornecedores_Atuais[I].For_InscricaoEstadual;
-      Grid_Fornecedores.Cells[4,I+1] := Fornecedores_Atuais[I].For_CNPJ;
-      Grid_Fornecedores.Cells[5,I+1] := Fornecedores_Atuais[I].For_Endereco;
-      Grid_Fornecedores.Cells[6,I+1] := Fornecedores_Atuais[I].For_Telefone;
-      Grid_Fornecedores.Cells[7,I+1] := Fornecedores_Atuais[I].For_Email;
-    End;
-  Grid_Fornecedores.RowCount := Grid_Fornecedores.RowCount - 1;
-End;
-
 procedure Tfrm_Fornecedores.btn_GravarClick(Sender: TObject);
 var
   Temp : Dados_Fornecedor;
@@ -356,6 +319,43 @@ begin
   Grid_Fornecedores.ColWidths[6] := 100;
   Grid_Fornecedores.ColWidths[7] := 100;
 end;
+
+Procedure Tfrm_Fornecedores.Popula_Grid(Condicao : String);
+Var
+  Fornecedores_Atuais : Fornecedores_Cadastrados;
+  I : Integer;
+Begin
+  SetLength(Fornecedores_Atuais,0);
+  Grid_Fornecedores.RowCount := 2;
+  Grid_Fornecedores.Cells[0,1] := '';
+  Grid_Fornecedores.Cells[1,1] := '';
+  Grid_Fornecedores.Cells[2,1] := '';
+  Grid_Fornecedores.Cells[3,1] := '';
+  Grid_Fornecedores.Cells[4,1] := '';
+  Grid_Fornecedores.Cells[5,1] := '';
+  Grid_Fornecedores.Cells[6,1] := '';
+
+  Fornecedores_Atuais := Retorna_Fornecedores_Cadastrados(Condicao);
+  if Length(Fornecedores_Atuais) = 0
+    then Begin
+           PopupEditarFornecedor.Enabled := False;
+           Exit;
+         End;
+  PopupEditarFornecedor.Enabled := True;
+  For I := 0 To Length(Fornecedores_Atuais)-1 Do
+    Begin
+      Grid_Fornecedores.RowCount := Grid_Fornecedores.RowCount + 1;
+      Grid_Fornecedores.Cells[0,I+1] := IntToStr(Fornecedores_Atuais[I].For_Codigo);
+      Grid_Fornecedores.Cells[1,I+1] := Fornecedores_Atuais[I].For_NomeFantasia;
+      Grid_Fornecedores.Cells[2,I+1] := Fornecedores_Atuais[I].For_RazaoSocial;
+      Grid_Fornecedores.Cells[3,I+1] := Fornecedores_Atuais[I].For_InscricaoEstadual;
+      Grid_Fornecedores.Cells[4,I+1] := Fornecedores_Atuais[I].For_CNPJ;
+      Grid_Fornecedores.Cells[5,I+1] := Fornecedores_Atuais[I].For_Endereco;
+      Grid_Fornecedores.Cells[6,I+1] := Fornecedores_Atuais[I].For_Telefone;
+      Grid_Fornecedores.Cells[7,I+1] := Fornecedores_Atuais[I].For_Email;
+    End;
+  Grid_Fornecedores.RowCount := Grid_Fornecedores.RowCount - 1;
+End;
 
 procedure Tfrm_Fornecedores.for_PesquisaChange(Sender: TObject);
 begin

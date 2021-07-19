@@ -15,6 +15,7 @@ object DM: TDM
   PixelsPerInch = 96
   TextHeight = 13
   object IBDatabase1: TIBDatabase
+    Connected = True
     DatabaseName = 'D:\Comercial\Win32\Debug\BANCO.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
@@ -547,5 +548,67 @@ object DM: TDM
     DataSet = IBTable8
     Left = 272
     Top = 560
+  end
+  object qryNotaCompra: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    ForcedRefresh = True
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT * FROM CAIXA')
+    Left = 104
+    Top = 616
+  end
+  object IBTable9: TIBTable
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    BufferChunks = 1000
+    CachedUpdates = False
+    FieldDefs = <
+      item
+        Name = 'NC_CODIGO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'NC_CODIGOFORNECEDOR'
+        DataType = ftInteger
+      end
+      item
+        Name = 'NC_PRODUTOSCOMPRADOS'
+        DataType = ftWideString
+        Size = 32765
+      end
+      item
+        Name = 'NC_DATA'
+        DataType = ftWideString
+        Size = 30
+      end
+      item
+        Name = 'NC_VALORTOTAL'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'NC_FRETE'
+        DataType = ftWideString
+        Size = 20
+      end
+      item
+        Name = 'NC_IMPOSTO'
+        DataType = ftWideString
+        Size = 20
+      end>
+    StoreDefs = True
+    TableName = 'NOTACOMPRA'
+    UniDirectional = False
+    Left = 200
+    Top = 616
+  end
+  object DataSource9: TDataSource
+    DataSet = IBTable9
+    Left = 272
+    Top = 616
   end
 end

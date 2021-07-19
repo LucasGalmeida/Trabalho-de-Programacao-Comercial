@@ -38,6 +38,9 @@ type
     qryNotaVenda: TIBQuery;
     IBTable8: TIBTable;
     DataSource8: TDataSource;
+    qryNotaCompra: TIBQuery;
+    IBTable9: TIBTable;
+    DataSource9: TDataSource;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
