@@ -1,0 +1,35 @@
+unit Unit_Relatorio;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
+  Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  Tfrm_Relatorio = class(TForm)
+    btnCliente: TBitBtn;
+    btnContasPagar: TBitBtn;
+    btnContasReceber: TBitBtn;
+    btnMovimentacaoCaixa: TBitBtn;
+    btnProduto: TBitBtn;
+    btnProdutoEstMin: TBitBtn;
+    btnVendas: TBitBtn;
+    btnVoltar: TBitBtn;
+    PnlTituloPagina: TPanel;
+    IMGtopo: TImage;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_Relatorio: Tfrm_Relatorio;
+
+implementation
+
+{$R *.dfm}
+
+end.

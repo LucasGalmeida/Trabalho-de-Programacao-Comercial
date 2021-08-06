@@ -339,17 +339,17 @@ Begin
                     then Result.Cli_Telefone := DM.qryCliente['Cli_Telefone']
                     else Result.Cli_Telefone := '';
                   if DM.qryCliente['Cli_Email'] <> Null
-                    then Result.Cli_Telefone := DM.qryCliente['Cli_Email']
-                    else Result.Cli_Telefone := '';
+                    then Result.Cli_Email := DM.qryCliente['Cli_Email']
+                    else Result.Cli_Email := '';
                   if DM.qryCliente['Cli_Sexo'] <> Null
                     then Result.Cli_Sexo := DM.qryCliente['Cli_Sexo']
                     else Result.Cli_Sexo := -1;
                   if DM.qryCliente['Cli_EstadoCivil'] <> Null
-                    then Result.Cli_Sexo := DM.qryCliente['Cli_EstadoCivil']
-                    else Result.Cli_Sexo := -1;
+                    then Result.Cli_EstadoCivil := DM.qryCliente['Cli_EstadoCivil']
+                    else Result.Cli_EstadoCivil := -1;
                   if DM.qryCliente['Cli_DataNascimento'] <> Null
-                    then Result.Cli_Telefone := DM.qryCliente['Cli_DataNascimento']
-                    else Result.Cli_Telefone := '';
+                    then Result.Cli_DataNascimento := DM.qryCliente['Cli_DataNascimento']
+                    else Result.Cli_DataNascimento := '';
                   Next;
                 End;
               End;

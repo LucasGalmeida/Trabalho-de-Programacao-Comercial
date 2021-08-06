@@ -1,0 +1,71 @@
+unit Unit_RelatorioClientesTela;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Unit_DM, Unit_Persistencia, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons,
+  IBX.IBTable, IBX.IBCustomDataSet, IBX.IBQuery, RLReport;
+
+type
+  Tfrm_RelatorioClientesTela = class(TForm)
+    Relatorio: TRLReport;
+    Cabecalho: TRLBand;
+    RLLabel1: TRLLabel;
+    Corpo: TRLBand;
+    Rodape: TRLBand;
+    CabecalhoColunas: TRLBand;
+    RLSystemInfo1: TRLSystemInfo;
+    RLSystemInfo2: TRLSystemInfo;
+    RLLabel2: TRLLabel;
+    RLLabel3: TRLLabel;
+    RLLabel4: TRLLabel;
+    RLLabel5: TRLLabel;
+    RLLabel6: TRLLabel;
+    RLSystemInfo3: TRLSystemInfo;
+    RLSystemInfo4: TRLSystemInfo;
+    RLLabel7: TRLLabel;
+    Cli_Codigo: TRLDBText;
+    Cli_Nome: TRLDBText;
+    Cli_Telefone: TRLDBText;
+    Cli_Email: TRLDBText;
+    Cli_Sexo: TRLDBText;
+    procedure SetaCondicao(cond : String);
+    procedure Popula_Relatorio();
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_RelatorioClientesTela: Tfrm_RelatorioClientesTela;
+  Condicao : String;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_RelatorioClientesTela.SetaCondicao(cond : String);
+begin
+  Condicao := cond;
+end;
+
+procedure Tfrm_RelatorioClientesTela.Popula_Relatorio();
+Var
+  Clientes_Atuais : Clientes_Cadastrados;
+begin
+  //SetLength(Clientes_Atuais,0);
+   Clientes_Atuais := Retorna_Clientes_Cadastrados(Condicao);
+   ShowMessage(condicao);
+   DM.IBTable1.Open;
+end;
+
+procedure Tfrm_RelatorioClientesTela.FormShow(Sender: TObject);
+begin
+   Popula_Relatorio();
+   Relatorio.previewModal;
+end;
+
+end.

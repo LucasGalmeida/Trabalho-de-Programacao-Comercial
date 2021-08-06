@@ -133,7 +133,7 @@ begin
                  Temp.Nv_ProdutosVendidos := Temp.Nv_ProdutosVendidos + aux;
               end;
 
-              Temp.Nv_Data := FormatDateTime('dd.mm.yyyy hh:MM:ss', Now);
+              Temp.Nv_Data := FormatDateTime('dd/mm/yyyy', Now);
               Temp.Nv_ValorTotal := frm_Venda.GRID_Carrinho.Cells[5, frm_Venda.GRID_Carrinho.RowCount - 1];
 
               Grava_Dados_NotaVenda(Temp);

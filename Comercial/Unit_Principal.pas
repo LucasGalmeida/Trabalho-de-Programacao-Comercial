@@ -49,6 +49,8 @@ type
     procedure ContasaReceber1Click(Sender: TObject);
     procedure ContasaPagar1Click(Sender: TObject);
     procedure EntradadeProdutos1Click(Sender: TObject);
+    procedure Relatrios1Click(Sender: TObject);
+    procedure Grficos1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -62,7 +64,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_Venda, Unit_Compra;
+uses Unit_Venda, Unit_Compra, Unit_Relatorio, Unit_Grafico;
 
 procedure TSuperMercadoDEF.BitBtn1Click(Sender: TObject);
 begin
@@ -146,11 +148,25 @@ begin
   frm_Fornecedores.Destroy;
 end;
 
+procedure TSuperMercadoDEF.Grficos1Click(Sender: TObject);
+begin
+  Application.CreateForm(Tfrm_Grafico, frm_Grafico);
+  frm_Grafico.ShowModal;
+  frm_Grafico.Destroy;
+end;
+
 procedure TSuperMercadoDEF.ProdutosClick(Sender: TObject);
 begin
   Application.CreateForm(Tfrm_Produtos, frm_Produtos);
   frm_Produtos.ShowModal;
   frm_Produtos.Destroy;
+end;
+
+procedure TSuperMercadoDEF.Relatrios1Click(Sender: TObject);
+begin
+  Application.CreateForm(Tfrm_Relatorio, frm_Relatorio);
+  frm_Relatorio.ShowModal;
+  frm_Relatorio.Destroy;
 end;
 
 procedure TSuperMercadoDEF.SaidadeProdutosvenda1Click(Sender: TObject);

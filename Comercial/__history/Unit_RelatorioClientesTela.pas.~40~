@@ -1,0 +1,72 @@
+unit Unit_RelatorioClientesTela;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Unit_DM, Unit_Persistencia, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons,
+  IBX.IBTable, IBX.IBCustomDataSet, IBX.IBQuery, RLReport;
+
+type
+  Tfrm_RelatorioClientesTela = class(TForm)
+    Relatorio: TRLReport;
+    Cabecalho: TRLBand;
+    RLLabel1: TRLLabel;
+    Corpo: TRLBand;
+    Rodape: TRLBand;
+    CabecalhoColunas: TRLBand;
+    RLSystemInfo1: TRLSystemInfo;
+    RLSystemInfo2: TRLSystemInfo;
+    RLLabel2: TRLLabel;
+    RLLabel3: TRLLabel;
+    RLLabel4: TRLLabel;
+    RLLabel5: TRLLabel;
+    RLLabel6: TRLLabel;
+    RLSystemInfo3: TRLSystemInfo;
+    RLSystemInfo4: TRLSystemInfo;
+    RLLabel7: TRLLabel;
+    Cli_Codigo: TRLDBText;
+    Cli_Nome: TRLDBText;
+    Cli_Telefone: TRLDBText;
+    Cli_Email: TRLDBText;
+    Cli_Sexo: TRLDBText;
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_RelatorioClientesTela: Tfrm_RelatorioClientesTela;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_RelatorioClientesTela.FormShow(Sender: TObject);
+Var
+  Clientes_Atuais : Clientes_Cadastrados;
+  I : Integer;
+begin
+
+   //SetLength(Clientes_Atuais,0);
+   Clientes_Atuais := Retorna_Clientes_Cadastrados('');
+   DM.IBTable1.Open;
+   //Ibtable1.Open;
+   //Ibtable1.Insert;
+
+   ShowMessage(IntToStr(Length(Clientes_Atuais)));
+   //for I := 0 to Length(Clientes_Atuais)-1 do
+   //begin
+   //    Ibtable1['Cli_Codigo'] := Clientes_Atuais[I].Cli_Codigo;
+   //    Ibtable1['Cli_Nome'] := Clientes_Atuais[I].Cli_Nome;
+   //    Ibtable1['Cli_Telefone'] := Clientes_Atuais[I].Cli_Telefone;
+   //    Ibtable1['Cli_Email'] := Clientes_Atuais[I].Cli_Email;
+   //    Ibtable1['Cli_Sexo'] := Clientes_Atuais[I].Cli_Sexo;
+   //end;
+   //Ibtable1.Post;
+   Relatorio.previewModal;
+end;
+
+end.

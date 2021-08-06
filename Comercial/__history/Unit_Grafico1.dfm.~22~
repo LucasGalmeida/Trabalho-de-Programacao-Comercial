@@ -1,0 +1,33 @@
+object frm_Grafico1: Tfrm_Grafico1
+  Left = 0
+  Top = 0
+  Caption = 'frm_Grafico1'
+  ClientHeight = 660
+  ClientWidth = 1034
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Chart1: TChart
+    Left = 0
+    Top = 0
+    Width = 1034
+    Height = 660
+    Title.Text.Strings = (
+      'TChart')
+    Align = alClient
+    TabOrder = 0
+    ExplicitLeft = 304
+    ExplicitTop = 144
+    ExplicitWidth = 400
+    ExplicitHeight = 250
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = 13
+  end
+end

@@ -20,7 +20,12 @@ uses
   Unit_SelecaoDeProdutosFornecedor in 'Unit_SelecaoDeProdutosFornecedor.pas' {frm_SelecaoDeProdutosFornecedor},
   Unit_NotaVenda in 'Unit_NotaVenda.pas' {frm_NotaVenda},
   Unit_NotaCompra in 'Unit_NotaCompra.pas' {frm_NotaCompra},
-  Unit_SelecaoDeFornecedores in 'Unit_SelecaoDeFornecedores.pas' {frm_SelecaoDeFornecedores};
+  Unit_SelecaoDeFornecedores in 'Unit_SelecaoDeFornecedores.pas' {frm_SelecaoDeFornecedores},
+  Unit_Relatorio in 'Unit_Relatorio.pas' {frm_Relatorio},
+  Unit_RelatorioClientes in 'Unit_RelatorioClientes.pas' {frm_RelatorioClientes},
+  Unit_RelatorioClientesTela in 'Unit_RelatorioClientesTela.pas' {frm_RelatorioClientesTela},
+  Unit_Grafico in 'Unit_Grafico.pas' {frm_Grafico},
+  Unit_ExibeGrafico in 'Unit_ExibeGrafico.pas' {frm_ExibeGrafico};
 
 {$R *.res}
 
@@ -44,5 +49,10 @@ begin
   Application.CreateForm(Tfrm_Compra, frm_Compra);
   Application.CreateForm(Tfrm_NotaVenda, frm_NotaVenda);
   Application.CreateForm(Tfrm_NotaCompra, frm_NotaCompra);
+  Application.CreateForm(Tfrm_Relatorio, frm_Relatorio);
+  Application.CreateForm(Tfrm_RelatorioClientes, frm_RelatorioClientes);
+  Application.CreateForm(Tfrm_RelatorioClientesTela, frm_RelatorioClientesTela);
+  Application.CreateForm(Tfrm_Grafico, frm_Grafico);
+  Application.CreateForm(Tfrm_ExibeGrafico, frm_ExibeGrafico);
   Application.Run;
 end.

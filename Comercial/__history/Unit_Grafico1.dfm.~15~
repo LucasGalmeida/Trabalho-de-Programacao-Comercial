@@ -1,0 +1,59 @@
+object frm_Grafico1: Tfrm_Grafico1
+  Left = 0
+  Top = 0
+  Caption = 'frm_Grafico1'
+  ClientHeight = 660
+  ClientWidth = 1034
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Chart1: TChart
+    Left = 240
+    Top = 160
+    Width = 400
+    Height = 250
+    Title.Text.Strings = (
+      'TChart')
+    TabOrder = 0
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = 13
+    object Series1: TPieSeries
+      DataSource = DBCrossTabSource1
+      XValues.Order = loAscending
+      YValues.Name = 'Pie'
+      YValues.Order = loNone
+      Frame.InnerBrush.BackColor = clRed
+      Frame.InnerBrush.Gradient.EndColor = clGray
+      Frame.InnerBrush.Gradient.MidColor = clWhite
+      Frame.InnerBrush.Gradient.StartColor = 4210752
+      Frame.InnerBrush.Gradient.Visible = True
+      Frame.MiddleBrush.BackColor = clYellow
+      Frame.MiddleBrush.Gradient.EndColor = 8553090
+      Frame.MiddleBrush.Gradient.MidColor = clWhite
+      Frame.MiddleBrush.Gradient.StartColor = clGray
+      Frame.MiddleBrush.Gradient.Visible = True
+      Frame.OuterBrush.BackColor = clGreen
+      Frame.OuterBrush.Gradient.EndColor = 4210752
+      Frame.OuterBrush.Gradient.MidColor = clWhite
+      Frame.OuterBrush.Gradient.StartColor = clSilver
+      Frame.OuterBrush.Gradient.Visible = True
+      Frame.Width = 4
+      Active = False
+      OtherSlice.Legend.Visible = False
+    end
+  end
+  object DBCrossTabSource1: TDBCrossTabSource
+    Formula = gfCount
+    Series = Series1
+    ValueField = 'NV_DATA'
+    DataSet = DM.qryNotaVenda
+    Left = 776
+    Top = 168
+  end
+end

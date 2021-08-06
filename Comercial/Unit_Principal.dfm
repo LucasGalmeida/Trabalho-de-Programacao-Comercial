@@ -148,8 +148,8 @@ object SuperMercadoDEF: TSuperMercadoDEF
       ParentFont = False
     end
     object label_Lucro: TLabel
-      Left = 145
-      Top = 481
+      Left = 686
+      Top = 558
       Width = 120
       Height = 29
       Caption = 'label_Lucro'
@@ -234,9 +234,11 @@ object SuperMercadoDEF: TSuperMercadoDEF
       Caption = '&Bussiness Intelligence'
       object Relatrios1: TMenuItem
         Caption = '&Relat'#243'rios'
+        OnClick = Relatrios1Click
       end
       object Grficos1: TMenuItem
         Caption = '&Gr'#225'ficos'
+        OnClick = Grficos1Click
       end
     end
   end

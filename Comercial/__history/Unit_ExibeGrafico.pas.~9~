@@ -1,0 +1,55 @@
+unit Unit_ExibeGrafico;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VclTee.TeeGDIPlus, VCLTee.TeEngine,
+  VCLTee.DBChart, VCLTee.TeeDBCrossTab, VCLTee.Series, Vcl.ExtCtrls,
+  VCLTee.TeeProcs, VCLTee.Chart, Unit_Caixa, Unit_Persistencia, Vcl.StdCtrls;
+
+type
+  Tfrm_ExibeGrafico = class(TForm)
+    Chart1: TChart;
+    Series1: TPieSeries;
+    Panel1: TPanel;
+    ComboBox1: TComboBox;
+    Label1: TLabel;
+    procedure RecuperaVendas();
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_ExibeGrafico: Tfrm_ExibeGrafico;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_ExibeGrafico.RecuperaVendas();
+Var
+  Transacoes_Atuais : Transacoes_Realizadas;
+  I : Integer;
+  aux : String;
+begin
+  Transacoes_Atuais := Retorna_Transacoes_Realizadas('');
+  for I := 0 to Length(Transacoes_Atuais)-1 do
+  begin
+
+  end;
+
+end;
+
+procedure Tfrm_ExibeGrafico.FormShow(Sender: TObject);
+begin
+   Chart1.Series[0].Visible := True;
+   Chart1.Series[0].Clear;
+   RecuperaVendas();
+
+end;
+
+end.

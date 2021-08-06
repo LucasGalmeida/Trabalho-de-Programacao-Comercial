@@ -8,6 +8,7 @@ uses
   IBX.IBCustomDataSet, IBX.IBQuery, IBX.IBDatabase
   ;
 
+
 type
   TDM = class(TForm)
     IBDatabase1: TIBDatabase;
@@ -63,5 +64,7 @@ begin
   SuperMercadoDEF.ShowModal;
   SuperMercadoDEF.Destroy;
 end;
+
+
 
 end.

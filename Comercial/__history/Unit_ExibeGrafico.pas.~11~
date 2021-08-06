@@ -1,0 +1,65 @@
+unit Unit_ExibeGrafico;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VclTee.TeeGDIPlus, VCLTee.TeEngine,
+  VCLTee.DBChart, VCLTee.TeeDBCrossTab, VCLTee.Series, Vcl.ExtCtrls,
+  VCLTee.TeeProcs, VCLTee.Chart, Unit_Caixa, Unit_Persistencia, Vcl.StdCtrls;
+
+type
+  Tfrm_ExibeGrafico = class(TForm)
+    Chart1: TChart;
+    Series1: TPieSeries;
+    Panel1: TPanel;
+    ComboBox1: TComboBox;
+    Label1: TLabel;
+    procedure RecuperaVendas();
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_ExibeGrafico: Tfrm_ExibeGrafico;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_ExibeGrafico.RecuperaVendas();
+Var
+  Transacoes_Atuais : Transacoes_Realizadas;
+  Vendas : Array of Dados_Transacao;
+  I, aux : Integer;
+  Tamanho : Integer;
+begin
+  Transacoes_Atuais := Retorna_Transacoes_Realizadas('');
+  Tamanho = Length(Transacoes_Atuais)-1;
+  SetLength(Vendas, Tamanho);
+  aux := 0;
+  for I := 0 to Tamanho do
+  begin
+      if Transacoes_Atuais[I].Cai_Descricao = 'Venda' then
+      begin
+        Vendas[aux] = Transacoes_Atuais[I];
+        aux := aux + 1;
+      end;
+  end;
+//   Total := '0';
+//   Data := FormatDateTime('dd.mm.yyyy', Today);
+//   Popula_Grid('Where Cai_Data Like '+ QuotedStr(Data+ '%'));
+end;
+
+procedure Tfrm_ExibeGrafico.FormShow(Sender: TObject);
+begin
+   Chart1.Series[0].Visible := True;
+   Chart1.Series[0].Clear;
+   RecuperaVendas();
+
+end;
+
+end.

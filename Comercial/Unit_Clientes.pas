@@ -343,7 +343,9 @@ Var
 Begin
   if Grid_Clientes.Cells[0,Linha] = ''
     then Exit;
+
   Temp := Retorna_Dados_Cliente(StrToInt(Grid_Clientes.Cells[0,Linha]));
+//  ShowMessage(IntToStr(Temp.Cli_Codigo) + Temp.Cli_Nome + Temp.Cli_Endereco + Temp.Cli_CPF + Temp.Cli_Telefone + Temp.Cli_Email + IntToStr(Temp.Cli_Sexo) + IntToStr(Temp.Cli_EstadoCivil) + Temp.Cli_DataNascimento);
   cli_Codigo.Text := IntToStr(Temp.Cli_Codigo);
   cli_Nome.Text := Temp.Cli_Nome;
   cli_Endereco.Text := Temp.Cli_Endereco;
